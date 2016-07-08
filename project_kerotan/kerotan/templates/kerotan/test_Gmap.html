@@ -8,22 +8,39 @@
 <html>
  <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
   <head>
+     <link rel="stylesheet" href="/static/css/bootstrap-arrows.css" type="text/css" data-angle="stylesheet">
+     <script src="/static/js/bootstrap-arrows.min.js"></script>
     <form action="{% url 'kerotan:display_google_map' %}" method="post">
     {% csrf_token %}
     <!-- {{ formset.management_form }} -->
-        <table>
+        <!--<table style="margin-top:10px;">-->
             <!-- {{ formset }} -->
             <!-- {% for form in formset %} -->
             <!-- {{ form }} -->
             <!-- {% endfor %} -->
-            <tr>
-                <td><label for="id_q">出発住所</label></td>
-                <td>{{ form.start_address }}</td>
-            </tr>
-            <tr>
-                <td><label for="id_q">到着住所</label></td>
-                <td>{{ form.arriv_address }}</td>
-            </tr>
+             <!--<tr style="margin-top:10px;">   -->
+            <div class="form-group">
+                <span><label for="id_q">出発住所</label></span>
+                <span>{{ form.start_address }}</span>
+                    <script>
+                        <!--var origin_address = document.getElementById("id_start_address");-->
+                        <!--var swap = origin_address.value;-->
+                        $('#id_start_address').addClass('form-control');
+                        <!--origin_address.outerHTML = '<div class="form-group"><input id="id_start_address" maxlength="100" name="start_address" type="text" value ="T" class="form-control"></div>';-->
+                        <!--alert(document.getElementById("id_start_address"));-->
+                    </script>
+            </div>
+            <div class="form-group">
+                <span><label for="id_q">到着住所</label></span>
+                <span>{{ form.arriv_address }}</span>
+                <script>
+                        <!--var destination_address = document.getElementById("id_arriv_address");-->
+                        <!--var swap = origin_address.value;-->
+                        $('#id_arriv_address').addClass('form-control');
+                        <!--origin_address.outerHTML = '<div class="form-group"><input id="id_start_address" maxlength="100" name="start_address" type="text" value ="T" class="form-control"></div>';-->
+                        <!--alert(document.getElementById("id_start_address"));-->
+                </script>
+            </div>
             <!--<tr>-->
                 <!--<td><label for="id_q">start_latitude</label></td>-->
                 <!--<td>{{start_latitude}}</td>-->
@@ -49,96 +66,163 @@
                 <!--<td>{{route.route.lineList}}</td>-->
             <!--</tr>-->
 
-            <tr hidden>
-                <td>出発地</td>
-                <td><input type="text" value="東京都新宿区西新宿8-17-1" id="origin"></td>
-            </tr>
-            <tr hidden>
-                <td>目的地</td>
-                <td><input type="text" value="新宿駅" id="destination" hidden></td>
-            </tr>
-            <tr hidden>
-                <td hidden>経由地1</td>
-                <td><input type="text" value="東京駅" id="waypoint" hidden></td>
-            </tr>
-            <tr hidden>
-                <td>経由地2</td>
-                <td><input type="text" value="品川駅" id="waypoint2" hidden></td>
-            </tr>
-        </table>
-            <input type="text" value="" id="test" hidden>
-            <input type="submit" value="地図検索" id="button" class ="btn btn-success btn-lg">
+            <!--<tr hidden>-->
+                <!--<td>出発地</td>-->
+                <!--<td><input type="text" value="東京都新宿区西新宿8-17-1" id="origin"></td>-->
+            <!--</tr>-->
+            <!--<tr hidden>-->
+                <!--<td>目的地</td>-->
+                <!--<td><input type="text" value="新宿駅" id="destination" hidden></td>-->
+            <!--</tr>-->
+            <!--<tr hidden>-->
+                <!--<td hidden>経由地1</td>-->
+                <!--<td><input type="text" value="東京駅" id="waypoint" hidden></td>-->
+            <!--</tr>-->
+            <!--<tr hidden>-->
+                <!--<td>経由地2</td>-->
+                <!--<td><input type="text" value="品川駅" id="waypoint2" hidden></td>-->
+            <!--</tr>-->
+        <!--</table>-->
+            <!--<input type="text" value="" id="test" hidden>-->
+        <div>
+            <input type="submit" value="地図検索" id="buiton" class ="btn btn-success btn-lg">
+            <i class="glyphicon glyphicon-search"></i>
+        </div>
             <!--<button type="button class" class ="btn btn-default">Defaule </button>-->
-            <div id="origin_ido" hidden></div>
-            <div id="origin_keido" hidden></div>
-            <div id="destination_ido" hidden></div>
-            <div id="destination_keido" hidden></div>
-            <div id="waypoint_ido" hidden></div>
-            <div id="waypoint_keido" hidden></div>
-            <div id="waypoint2_ido" hidden></div>
-            <div id="waypoint2_keido" hidden></div>
+            <!--<div id="origin_ido" hidden></div>-->
+            <!--<div id="origin_keido" hidden></div>-->
+            <!--<div id="destination_ido" hidden></div>-->
+            <!--<div id="destination_keido" hidden></div>-->
+            <!--<div id="waypoint_ido" hidden></div>-->
+            <!--<div id="waypoint_keido" hidden></div>-->
+            <!--<div id="waypoint2_ido" hidden></div>-->
+            <!--<div id="waypoint2_keido" hidden></div>-->
 
-        <table id="route_guide" border="1">
-            <tr>
-                <td nowrap id="time"></td>
-                <td nowrap id="place"></td>
-                <td nowrap id="means"></td>
-                <td nowrap id="money"></td>
-            </tr>
-        </table>
+        <!--<table id="route_guide" border="1">-->
+            <!--<tr>-->
+                <!--<td nowrap id="time"></td>-->
+                <!--<td nowrap id="place"></td>-->
+                <!--<td nowrap id="means"></td>-->
+                <!--<td nowrap id="money"></td>-->
+            <!--</tr>-->
+        <!--</table>-->
 
     </form>
       <div class="map-embed">
-	    <div id="map-canvas" style="width:800px; height:600px"></div>
+	    <div id="map-canvas" style="width:800px; height:700px"></div>
       </div>
       <!--<div id="directions-panel" style="width:100%"></div>-->
       <!--<div id="directions-panel2" style="width:100%"></div>-->
-      <div id="route"></div>
-
-
-
+      <div id="function_table">
         <ul  class="nav nav-tabs">
           <!--<li class="active col-md-5"><a href="#tab1" data-toggle="tab" style="position:absolute; top:-100px">経路</a></li>-->
           <!--<li class="col-md-10"><a href="#tab2" data-toggle="tab" style="position:absolute; top:-100px">会社概要</a></li>-->
           <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
-          <li class="active col-md-5"><a href="#tab1" data-toggle="tab">経路</a></li>
-          <li class="col-md-10"><a href="#tab2" data-toggle="tab">会社概要</a></li>
-          <li class="col-md-15"><a href="#tab3" data-toggle="tab">ニュース</a></li>
+          <span class="active col-md-3"><a href="#tab1" data-toggle="tab">経路</a></span>
+          <span class="col-md-3"><a href="#tab2" data-toggle="modal">会社概要</a></span>
+          <span class="col-md-3"><a href="#tab3" data-toggle="modal">ニュース</a></span>
         </ul>
+          {% for i in route.route.lineList %}
+          <div>
+               <span width="70" style=" left:10%">{{i.stationFrom.stationName}}</span>
+               <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
+               <!--<td width="70">{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</td>-->
 
-        <div class="tab-content">
-          <div class="tab-pane active" id="tab1">
-              <div>トータル時間{{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
-              <div>料金{{route.route.fare}}</div>
-              <div class="container">
-                  <table class="table table-bordered table-striped table-condensed">
-                      <thead>
-                        <tr>
-                            <td width="70">出発場所</td>
-                            <td width="70">出発時間</td>
-                            <td width="70">到着時間</td>
-                            <td width="70">到着場所</td>
-                            <td width="70">手段</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for i in route.route.lineList %}
-                       <tr>
-                           <td width="70">{{i.stationFrom.stationName}}</td>
-                           <td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>
-                           <td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>
-                           <td width="70">{{i.stationTo.stationName}}</td>
-                           <td width="70">{{i.lineName}}</td>
-                           <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
-                       </tr>
-                        {% endfor %}
-                      </tbody>
-                  </table>
-              </div>
+
+               <span width="70" style="position:absolute; right:10%">{{i.stationTo.stationName}}</span>
+               <!--<td width="70">{{i.lineName}}</td>-->
+               <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
           </div>
-          <div class="tab-pane" id="tab2"></div>
-          <div class="tab-pane" id="tab3"></div>
-        </div>
+          {% endfor %}
+
+      </div>
+
+
+
+         <div class="tab-content">
+              <div class="tab-pane active" id="tab1">
+                  <div>トータル時間{{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
+                  <div>料金{{route.route.fare}}</div>
+                               <span class='arrow-success'></span>
+                  <div class="container" style="width:350">
+                      <table class="table table-bordered table-striped table-condensed" border-color="red">
+                          <thead>
+                            <tr>
+                                <td width="70">出発場所</td>
+                                <td width="70">出発時間</td>
+                                <td width="70">到着時間</td>
+                                <td width="70">到着場所</td>
+                                <td width="70">手段</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for i in route.route.lineList %}
+                           <tr>
+                               <td width="70">{{i.stationFrom.stationName}}</td>
+                               <td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>
+                               <td width="70">{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</td>
+                               <td width="70">{{i.stationTo.stationName}}</td>
+                               <td width="70">{{i.lineName}}</td>
+                               <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
+                           </tr>
+                            {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+             </div>
+              <div class="modal fade" id="tab2">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">会社概要</h4>
+                      </div>
+                      <div class="modal-body">{{overview}}</div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">閉じる</button>
+                       </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal fade" id="tab3">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">ニュース一覧</h4>
+                      </div>
+                      <div class="modal-body">
+                          <table border="1" style="word-break:break-all;">
+                            {% for j in news %}
+                            <tr>
+                                <!--<td width="70">{{j.Source}}</td>-->
+                                <td width="10%">{{j.Date}}</td>
+                                <td width="20%"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></td>
+                                <!--<td width="70">{{j.Url}}</td>-->
+                                <td width="70%">{{j.Description}}</td>
+                                <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
+                                <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
+                                <!--<td width="70">{{i.stationTo.stationName}}</td>-->
+                                <!--<td width="70">{{i.lineName}}</td>-->
+                                <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
+                            </tr>
+                            {% endfor %}
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">閉じる</button>
+                       </div>
+                    </div>
+                  </div>
+              </div>
+
+                <!--//モーダル-->
+
+
+
+
+
 
         <!--<table border="1" style="position:absolute; top:210px;">-->
             <!--<tr>-->
@@ -163,97 +247,9 @@
             <!--</tr>-->
                 <!--{% endfor %}-->
             <!--</table>-->
-            <style type="text/css">
-            .map-embed
-            {
-                max-width: 100% ;
-                height: 0 ;
-                margin: 0 ;
-                padding: 0 0 56.25% ;
-
-                overflow: auto ;
-
-                position: relative ;
-                top: -100px ;
-                left: 400px ;
-            }
-
-            .map-embed > div
-            {
-                position: absolute ;
-                top: -150px ;
-                left: 0px ;
-
-                width: 100% ;
-                height: 100% ;
-
-                margin: 0 ;
-                padding: 0 ;
-            }
-
-            .map-embed img
-            {
-                max-width: none ;
-            }
-
-            #panel{
-                margin-left:70%;
-                padding:0 10px;
-                height:400px;
-                overflow:auto;
-            }
-            body{
-                background-color : 	paleturquoise;
-            }
-            #origin{
-                width:150%;
-                <!--height:30%;-->
-            }
-            #destination{
-                width:150%;
-                color:green;
-                <!--box-shadow: inset 1px 4px 9px -6px rgba(0,0,0,0.5);-->
-            }
-            #waypoint{
-                width:150%;
-                color:green;
-            }
-            #waypoint2{
-                width:150%;
-                color:green;
-            }
-            #button{
-                width:200px;
-                font-size:24px;
-                font-weight:bold;
-                text-decoration:none;
-                display:block;
-                text-align:center;
-                padding:8px 0 10px;
-                margin:0px 0px 0px 0px;
-                color:#fff;
-                background-color:#49a9d4;
-                border-radius:5px;
-            }
-            #origin_ido{
-                width:100px;
-                margin:0px 0px 0px 0px;
-                padding:0px;
-            }
-            <!--<div id="origin_ido"></div>-->
-            <!--<div id="origin_keido"></div>-->
-            <!--<div id="destination_ido"></div>-->
-            <!--<div id="destination_keido"></div>-->
-            <!--<div id="waypoint_ido"></div>-->
-            <!--<div id="waypoint_keido"></div>-->
-            <!--<div id="waypoint2_ido"></div>-->
-            <!--<div id="waypoint2_keido"></div>            -->
-
-            <!--td{-->
-                <!--color:green;-->
-            <!--}-->
-
-    </style>
+            <!--<style type="text/css">-->
+        <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+    <!--</style>-->
       <!--<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
   </head>
  <script>
@@ -287,6 +283,7 @@
      }
  </script>
   <body onload="timing_load()">
+        <!--<div id="buckground_image"></div>-->
   <!--<body onload="initialize()">-->
 <!--<div id="map_canvas" style="width:500px; height:300px"></div>-->
                   <!--{% for i in route.route.lineList %}-->
@@ -377,10 +374,10 @@
 
         function timing_load(){
           // フォームに入力された住所情報を取得
-          var address = document.getElementById("origin").value;
-          var destination = document.getElementById("destination").value;
-          var waypoint = document.getElementById("waypoint").value;
-          var waypoint2 = document.getElementById("waypoint2").value;
+          <!--var address = document.getElementById("origin").value;-->
+          <!--var destination = document.getElementById("destination").value;-->
+          <!--var waypoint = document.getElementById("waypoint").value;-->
+          <!--var waypoint2 = document.getElementById("waypoint2").value;-->
           <!--console.log(address);-->
           <!--console.log(destination);-->
           // 取得した住所を引数に指定してcodeAddress()関数を実行
@@ -388,51 +385,51 @@
 
 
 
-            var geocoder = new google.maps.Geocoder();
-            <!--var address = document.getElementById("origin").value;-->
-                geocoder.geocode( { 'address': address,
-                                    'region': 'jp'}, function(results, status){
-                      <!--callback(results[0].geometry.location.lat());-->
-                      document.getElementById('origin_ido').innerText = results[0].geometry.location.lat();
-                      document.getElementById('origin_keido').innerText = results[0].geometry.location.lng();
-                      <!--console.log(results[0].geometry.location);-->
-                      <!--alert( results[ 0 ].geometry.location.lat());-->
-                      <!--console.log(results[0].geometry.location.lat());-->
-                      <!--infowindow(results[0].geometry.location);-->
-              });
+            <!--var geocoder = new google.maps.Geocoder();-->
+            <!--&lt;!&ndash;var address = document.getElementById("origin").value;&ndash;&gt;-->
+                <!--geocoder.geocode( { 'address': address,-->
+                                    <!--'region': 'jp'}, function(results, status){-->
+                      <!--&lt;!&ndash;callback(results[0].geometry.location.lat());&ndash;&gt;-->
+                      <!--document.getElementById('origin_ido').innerText = results[0].geometry.location.lat();-->
+                      <!--document.getElementById('origin_keido').innerText = results[0].geometry.location.lng();-->
+                      <!--&lt;!&ndash;console.log(results[0].geometry.location);&ndash;&gt;-->
+                      <!--&lt;!&ndash;alert( results[ 0 ].geometry.location.lat());&ndash;&gt;-->
+                      <!--&lt;!&ndash;console.log(results[0].geometry.location.lat());&ndash;&gt;-->
+                      <!--&lt;!&ndash;infowindow(results[0].geometry.location);&ndash;&gt;-->
+              <!--});-->
 
-            var geocoder = new google.maps.Geocoder();
-                geocoder.geocode( { 'address': destination,
-                                    'language': 'jp',
-                                    <!--'bounds': bound_latlng|bound_latlng2,-->
-                                    <!--'bounds': 36,130|40,140,-->
-                                    'region': 'jp'}, function(results, status){
+            <!--var geocoder = new google.maps.Geocoder();-->
+                <!--geocoder.geocode( { 'address': destination,-->
+                                    <!--'language': 'jp',-->
+                                    <!--&lt;!&ndash;'bounds': bound_latlng|bound_latlng2,&ndash;&gt;-->
+                                    <!--&lt;!&ndash;'bounds': 36,130|40,140,&ndash;&gt;-->
+                                    <!--'region': 'jp'}, function(results, status){-->
 
-                      <!--var bounds = new google.maps.LatLngBounds();-->
-                      document.getElementById('destination_ido').innerText = results[0].geometry.location.lat();
-                      document.getElementById('destination_keido').innerText = results[0].geometry.location.lng();
+                      <!--&lt;!&ndash;var bounds = new google.maps.LatLngBounds();&ndash;&gt;-->
+                      <!--document.getElementById('destination_ido').innerText = results[0].geometry.location.lat();-->
+                      <!--document.getElementById('destination_keido').innerText = results[0].geometry.location.lng();-->
 
-                      <!--for(var i=0; i < results.length ; i++){-->
-                      for(var i in results){
-                        <!--alert(results[i].geometry.location);-->
-                        <!--alert(results[i].formatted_address);-->
-                        };
-                      <!--console.log(results[0].geometry.location.lat());-->
-              });
+                      <!--&lt;!&ndash;for(var i=0; i < results.length ; i++){&ndash;&gt;-->
+                      <!--for(var i in results){-->
+                        <!--&lt;!&ndash;alert(results[i].geometry.location);&ndash;&gt;-->
+                        <!--&lt;!&ndash;alert(results[i].formatted_address);&ndash;&gt;-->
+                        <!--};-->
+                      <!--&lt;!&ndash;console.log(results[0].geometry.location.lat());&ndash;&gt;-->
+              <!--});-->
 
-            var geocoder = new google.maps.Geocoder();
-                geocoder.geocode( { 'address': waypoint,
-                                    'region': "jp"}, function(results, status){
-                      document.getElementById('waypoint_ido').innerText = results[0].geometry.location.lat();
-                      document.getElementById('waypoint_keido').innerText = results[0].geometry.location.lng();
-              });
+            <!--var geocoder = new google.maps.Geocoder();-->
+                <!--geocoder.geocode( { 'address': waypoint,-->
+                                    <!--'region': "jp"}, function(results, status){-->
+                      <!--document.getElementById('waypoint_ido').innerText = results[0].geometry.location.lat();-->
+                      <!--document.getElementById('waypoint_keido').innerText = results[0].geometry.location.lng();-->
+              <!--});-->
 
-            var geocoder = new google.maps.Geocoder();
-                geocoder.geocode( { 'address': waypoint2,
-                                    'region': "jp"}, function(results, status){
-                      document.getElementById('waypoint2_ido').innerText = results[0].geometry.location.lat();
-                      document.getElementById('waypoint2_keido').innerText = results[0].geometry.location.lng();
-              });
+            <!--var geocoder = new google.maps.Geocoder();-->
+                <!--geocoder.geocode( { 'address': waypoint2,-->
+                                    <!--'region': "jp"}, function(results, status){-->
+                      <!--document.getElementById('waypoint2_ido').innerText = results[0].geometry.location.lat();-->
+                      <!--document.getElementById('waypoint2_keido').innerText = results[0].geometry.location.lng();-->
+              <!--});-->
 
 
 
@@ -668,25 +665,10 @@
 
     </script>
                 <!--{% endfor %}-->
-         <dir>
-            {{overview}}
-        </dir>
-              <table border="1" width="1000">
-                {% for j in news %}
-            <tr width="1000">
-                <td width="70">{{j.Source}}</td>
-                <td width="70">{{j.Date}}</td>
-                <td width="200">{{j.Title}}</td>
-                <td width="70">{{j.Url}}</td>
-                <td width="500">{{j.Description}}</td>
-                <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
-                <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
-                <!--<td width="70">{{i.stationTo.stationName}}</td>-->
-                <!--<td width="70">{{i.lineName}}</td>-->
-                <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
-            </tr>
-                {% endfor %}
-            </table>
+         <!--<dir>-->
+            <!--{{overview}}-->
+        <!--</dir>-->
+
   </body>
 </html>
 {% endblock content %}
