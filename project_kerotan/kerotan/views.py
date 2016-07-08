@@ -67,7 +67,7 @@ JCBを中心としたクレジットカード会社の基幹システムなど�
 
 		if form.is_valid():
 			#入力内容が、辞書に登録された会社名に含まれるなら
-			if form.cleaned_data["start_address"] in company_address.keys():
+			if ( form.cleaned_data["start_address"] in company_address.keys() ) and ( form.cleaned_data["arriv_address"] in company_address.keys() ):
 				try:
 					#geocode,会社概要、ニュースを取得する。
 					try:
@@ -157,7 +157,7 @@ JCBを中心としたクレジットカード会社の基幹システムなど�
 			#この場合、入力内容は登録されていない会社名or住所
 			#	前者の場合は、適切なgeocodeが取得できない可能性があるが、現状考慮せずそのままgeocodeを取得。
 			#	後者の場合は、住所から適切なgeocodeを取得。
-			elif form.cleaned_data["start_address"] in company_address.keys():
+			elif ( form.cleaned_data["start_address"] not in company_address.keys() ) or ( form.cleaned_data["arriv_address"] not in company_address.keys() ):
 				print("--------------------------------------------------------")
 				print("入力された出発・到着住所は、辞書に登録されてませんでした。経路情報だけ返します。")
 				print(traceback.print_exc())
@@ -192,6 +192,7 @@ JCBを中心としたクレジットカード会社の基幹システムなど�
 			
 			else:
 				#ありえない。
+				print("ありえない。")
 				return render_to_response('kerotan/test_Gmap.html', {'form':form}, RequestContext(request))
 
 
