@@ -13,9 +13,9 @@ from APIkey_load_yaml import load_API_KEY
 class Ekitan(object):
 
 	# コンストラクタ（初期化）
-	def __init__(self, key):
+	def __init__(self):
 		# APIアクセスキー
-		self.api_key = key
+		self.api_key = load_API_KEY("Ekitan API")
 
 	# web検索
 	def norikae_search(self, s_ido=35.696031, s_keido=139.690522, t_ido=35.681298, t_keido=139.766246 ):
@@ -186,11 +186,9 @@ class Ekitan(object):
 		results={"condition":condition, "route":route}
 
 		return results
-		
+
 
 if __name__ == '__main__':
-	#APIキーをロード
-	key = load_API_KEY("Ekitan API")
 	#インスタンス作成
 	ekitan = Ekitan(key)
 

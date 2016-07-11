@@ -11,7 +11,7 @@ from django.forms.formsets import formset_factory
 from kerotan.forms import AddressForm
 
 from .ekitan.ekitan_api import Ekitan
-from .gmaps_geocoder.gmaps_geocoder import get_geocode
+from .gmaps_geocoder.gmaps_geocoder import GoogleMapsGeocoder
 from .bing_news.bing_api import Bing
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../API')
 from APIkey_load_yaml import load_API_KEY
@@ -91,9 +91,10 @@ JCBを中心としたクレジットカード会社の基幹システムなど�
 				#Get geocode by Google Maps API.
 				try:
 					print("try get_geocode : ",end="")
+					gmg=GoogleMapsGeocoder()
 					geocode = {}
-					geocode.update({ "start" : get_geocode( start_company )["location"] })
-					geocode.update({ "arriv" : get_geocode( arriv_company )["location"] })
+					geocode.update({ "start" : gmg.get_geocode( start_company )["location"] })
+					geocode.update({ "arriv" : gmg.get_geocode( arriv_company )["location"] })
 					print("finished.")
 				except Exception as e:
 					#入力された住所から、geocodeを特定できない。
@@ -131,7 +132,7 @@ JCBを中心としたクレジットカード会社の基幹システムなど�
 					try:
 						#bing search APIで、関連ニュースをとってくる
 						print("try bing.web_search : ",end="")
-						bing = Bing( load_API_KEY("Bing search API") )
+						bing = Bing()
 						keys = ["Title", "Url", "Source", "Description", "Date"]
 						query = form.cleaned_data["arriv_address"]
 						news = bing.web_search(query, 5, keys)
@@ -178,7 +179,7 @@ JCBを中心としたクレジットカード会社の基幹システムなど�
 			#Get route infomation by Ekitan API.
 			try:
 				print("try ekitan search : ",end="")
-				ekitan = Ekitan( load_API_KEY("Ekitan API") )
+				ekitan = Ekitan()
 				_, results_filtered = ekitan.norikae_search( s_ido=geocode["start"]["lat"], s_keido=geocode["start"]["lng"], t_ido=geocode["arriv"]["lat"], t_keido=geocode["arriv"]["lng"],  )
 				print("finished.")
 				# print("results_filtered",results_filtered)
