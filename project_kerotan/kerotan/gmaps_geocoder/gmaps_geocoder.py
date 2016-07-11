@@ -24,7 +24,7 @@ def __result_filtering(geocode_result):
 def get_geocode(adress="〒160-0023 東京都新宿区 西新宿８丁目１７−１"):
 	try:
 		#API key load.
-		key=load_API_KEY("Google Maps API")
+		key=load_API_KEY("Google Maps Geocoding API")
 		#auth
 		gmaps=googlemaps.Client(key=key)
 
