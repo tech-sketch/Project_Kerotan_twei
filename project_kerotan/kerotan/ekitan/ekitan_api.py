@@ -190,7 +190,7 @@ class Ekitan(object):
 
 if __name__ == '__main__':
 	#インスタンス作成
-	ekitan = Ekitan(key)
+	ekitan = Ekitan()
 
 	#検索
 	try:

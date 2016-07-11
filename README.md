@@ -31,8 +31,36 @@ $ pip install -r requirements.txt
 * [Google Maps Directions API](https://developers.google.com/maps/documentation/directions/?hl=ja)
 * [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro?hl=ja)
 
-各APIのライセンスキーはそれぞれ、
+各APIのライセンスキーは
+Project_Kerotan/API/APIkey_write_yaml.py
+の中の"key"に、それぞれ記述してください。
+なお、Google Maps JavaScript API、Google Maps Directions APIに関してはライセンスキーは不要です。
+
+##実行方法
+データベースの設定、ポートの設定、サーバの起動方法について説明します。
+###データベースの設定
+Project_Kerotan/project_kerotan/project_kerotan/settings.pyにてデータベースの設定を行います。
+以下に、sqlite3の設定例を示します。
+（なおバージョン1.0においては、データベースは使用していません。）
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+```
+設定が完了したら、以下を実行して、マイグレーションを行います。
+```
+$ python manage.py makemigrations
+$ python manage.py migrate
+```
+
+##サーバの起動
+以下のコマンドでサーバを起動します。
+```
+$ python app.py
+```
+サーバ起動後、Webブラウザで、http://127.0.0.1:8000/ にアクセスします。
 
 
-
-チーム開発演習/経路検索アプリケロたん
