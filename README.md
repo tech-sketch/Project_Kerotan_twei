@@ -61,6 +61,6 @@ $ python manage.py migrate
 ```
 $ python app.py
 ```
-サーバ起動後、Webブラウザで、http://127.0.0.1:8000/ にアクセスします。
+サーバ起動後、Webブラウザでhttp://127.0.0.1:8000/ にアクセスします。
 
 
