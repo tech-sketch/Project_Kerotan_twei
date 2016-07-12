@@ -10,9 +10,9 @@ from APIkey_load_yaml import load_API_KEY
 class Bing(object):
 
 	# コンストラクタ（初期化）
-	def __init__(self, key):
+	def __init__(self):
 		# APIアクセスキー
-		self.api_key = key
+		self.api_key = load_API_KEY("Bing search API")
 
 	# web検索
 	def web_search(self, query, k, keys=["Url"], skip=0):
@@ -101,8 +101,6 @@ class Bing(object):
 #	 return results
 
 if __name__ == '__main__':
-	#APIキーをロード
-	key = load_API_KEY("Bing search API")
 	#クエリを設定
 	q = "TIS"
 	#インスタンス生成
