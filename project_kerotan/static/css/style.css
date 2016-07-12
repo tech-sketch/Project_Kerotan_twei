@@ -1,21 +1,22 @@
             .map-embed
             {
-                max-width: 100% ;
+                max-width: 70% ;
+                max-height:30%;
                 height: 0 ;
-                margin: 0 ;
+                margin: 0 0 0 0 ;
                 padding: 0 0 56.25% ;
 
                 overflow: auto ;
 
                 position: relative ;
-                top: -120px ;
-                left: 400px ;
+                top: 0px ;
+                left: 50px ;
             }
 
             .map-embed > div
             {
                 position: absolute ;
-                top: -150px ;
+                top: 0px ;
                 left: 0px ;
 
                 width: 100% ;
@@ -37,9 +38,16 @@
                 overflow:auto;
             }
             body{
-                background-color : 	paleturquoise;
-                                background-image : url(/static/image/flog.jpg);
-                background-repeat:no-repeat;
+                width:100%;
+                height:100%;
+                background-color : aliceblue;
+                //background-image : url(/static/img/flog.jpg);
+                //background-image : url(/static/img/suwako4.jpg);
+                //background-image : url(/static/img/gahag.png);
+                //background-image : url(/static/img/gatag2.jpg);
+                //background-repeat:repeat;
+                //background-size:cover;
+                //background-attachment:fixed
             }
             #buckground_image{
 
@@ -63,14 +71,14 @@
                 color:green;
             }
             #button{
-                width:200px;
+                width:150px;
                 font-size:24px;
                 font-weight:bold;
                 text-decoration:none;
                 display:block;
                 text-align:center;
                 padding:8px 0 10px;
-                margin:0px;
+                margin:0 0 10px 0;
                 color:#fff;
                 background-color:#49a9d4;
                 border-radius:5px;
@@ -97,21 +105,67 @@
             <!--}-->
             #function_table{
                 width:300px;
-                height:300px;
+                //height:300px;
                 font-size:10px;
                 font-weight:bold;
                 text-decoration:none;
                 display:block;
                 position:absolute;
-                top:35%;
+                //top:40%;
                 text-align:center;
-                padding:8px 0 10px;
+                padding:0px 0 0px;
                 margin:0px 0px 0px 0px;
                 color:#fff;
-                background-color:#49a9d4;
+                background-color:whitesmoke;
 
             }
-            .col-md-3{
+            .function_thread{
+                width:100%;
+                height:30%;
+                font-size:10px;
+                font-weight:bold;
+                text-decoration:none;
+                display:inline-block;
+                position:relative;
+                //top:35%;
+                text-align:center;
+                padding:0px 0 0px;
+                margin:5px 0px 5px 0px;
+                color:black;
+                background-color:white;
+                //background-color:chartreuse;
+                border-style:solid;
+                border-width: 1px;
+                border-radius:10px;
+            }
+            #thread1{
+                position:relative;
+                top:20%;
+                //right:25%;
+                float:left;
+                width:40%;
+                //margin:10%px 0px 10% 10%;
+                margin:0 auto;
+                display:inline-block;
+           }
+           #thread2{
+                position:relative;
+                top:10%;
+                //right:25%;
+                width:20%;
+                display:inline-block;
+           }
+            #thread3{
+                position:relative;
+                top:20%;
+                //right:25%;
+                float:right;
+                width:40%;
+                //margin:10%px 0px 10% 10%;
+                margin:0 auto;
+                display:inline-block;
+           }
+            li{
                 font-size:20px;
                 text-align:center;
                 background-color:mediumspringgreen;
@@ -129,6 +183,17 @@
                 width:300px;
             }
             span.arrow-success{
-                display:block;
+                display:inline-block;
+                position:relative;
+                float:center;
+                width:20%;
+                margin:0 auto;
+                //margin:0 auto 0 auto;
+//                bottom:0%;
+            }
+            .container{
+                width:100%;
+                max-height:100%;
+
             }
 

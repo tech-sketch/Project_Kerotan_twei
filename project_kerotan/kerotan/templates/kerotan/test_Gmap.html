@@ -6,23 +6,39 @@
 {% block content %}
 <!DOCTYPE html>
 <html>
- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+ <script src="https://maps.googleapis.com/maps/api/js?sencer=false"></script>
+ <!--<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
   <head>
      <link rel="stylesheet" href="/static/css/bootstrap-arrows.css" type="text/css" data-angle="stylesheet">
      <script src="/static/js/bootstrap-arrows.min.js"></script>
-    <form action="{% url 'kerotan:display_google_map' %}" method="post">
-    {% csrf_token %}
-    <!-- {{ formset.management_form }} -->
+     <script>
+     $(function () {
+         $('.arrow, [class^=arrow-]').bootstrapArrows();
+     });
+     </script>
+        <div style="background-color:black; color:white; text-aline:left; font-size:30px; height:50px; width:100%; margin:0 auto;">
+          <img src="/static/img/flog_shadow2.jpg" style="width:50px; height:50px;">
+            <span>
+              ケロたん
+          </span>
+        </div>
+     <form action="{% url 'kerotan:display_google_map' %}" method="post">
+     {% csrf_token %}
+     <!-- {{ formset.management_form }} -->
         <!--<table style="margin-top:10px;">-->
             <!-- {{ formset }} -->
             <!-- {% for form in formset %} -->
             <!-- {{ form }} -->
             <!-- {% endfor %} -->
              <!--<tr style="margin-top:10px;">   -->
+         <div style="width=30%;float:left;">
             <div class="form-group">
-                <span><label for="id_q">出発住所</label></span>
+                <span style=" font-size:24px;"><label for="id_q">出発地</label></span>
                 <span>{{ form.start_address }}</span>
                     <script>
+                    if(document.getElementById("id_start_address").value == false){
+                        document.getElementById("id_start_address").value = "TIS";
+                     }
                         <!--var origin_address = document.getElementById("id_start_address");-->
                         <!--var swap = origin_address.value;-->
                         $('#id_start_address').addClass('form-control');
@@ -31,7 +47,7 @@
                     </script>
             </div>
             <div class="form-group">
-                <span><label for="id_q">到着住所</label></span>
+                <span style="font-size:24px;"><label for="id_q">目的地</label></span>
                 <span>{{ form.arriv_address }}</span>
                 <script>
                         <!--var destination_address = document.getElementById("id_arriv_address");-->
@@ -85,8 +101,11 @@
         <!--</table>-->
             <!--<input type="text" value="" id="test" hidden>-->
         <div>
-            <input type="submit" value="地図検索" id="buiton" class ="btn btn-success btn-lg">
-            <i class="glyphicon glyphicon-search"></i>
+            <button type="submit" id="button" class ="btn btn-success btn-lg">検索
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+            <button></button>
+
         </div>
             <!--<button type="button class" class ="btn btn-default">Defaule </button>-->
             <!--<div id="origin_ido" hidden></div>-->
@@ -106,71 +125,113 @@
                 <!--<td nowrap id="money"></td>-->
             <!--</tr>-->
         <!--</table>-->
+        <div id="function_table">
+            <ul  class="nav nav-tabs">
+              <!--<li class="active col-md-5"><a href="#tab1" data-toggle="tab" style="position:absolute; top:-100px">経路</a></li>-->
+              <!--<li class="col-md-10"><a href="#tab2" data-toggle="tab" style="position:absolute; top:-100px">会社概要</a></li>-->
+              <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
+              <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
+              <li class="active col-ld-3"><a href="#tab1" data-toggle="tab">経路</a></li>
+              <li class="col-ld-4"><a href="#tab2" data-toggle="modal">会社概要</a></li>
+              <li class="col-ld-5"><a href="#tab3" data-toggle="modal">ニュース</a></li>
+            </ul>
+              {% for i in route.route.lineList %}
+              <div class="function_thread">
+                  <span id="thread1">
+                      <div style="font-size: 20px;">
+                          <script>
+                            if("{{i.stationFrom.stationName}}" == "仮想点1"){
+                                document.write(document.getElementById("id_start_address").value);
+                            }else{
+                                document.write("{{i.stationFrom.stationName}}");
+                            }
+                          </script>
+                      </div>
+                      <div>{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</div>
+                  </span>
+                  <span id="thread2">
+                      <script>
+                        var str = "{{i.lineName}}";
+                        <!--if(str.match(/線/)){-->
+                            <!--document.write("<img src="/static/img/metro.png">");-->
+                        <!--}-->
+                      </script>
+                    <div class='arrow-success' data-angle='90'></div>
+                    <div>
+                        {{i.lineName}}
+                    </div>
+
+                  </span>
+                  <span id="thread3">
+                    <div style="font-size: 20px;">
+                          <script>
+                            if("{{i.stationTo.stationName}}" == "仮想点2"){
+                                document.write(document.getElementById("id_arriv_address").value);
+                            }else{
+                                document.write("{{i.stationTo.stationName}}");
+                            }
+                          </script>
+                    </div>
+                    <div >{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</div>
+                  </span>
+              </div>
+              {% endfor %}
+                <!--<script>-->
+                    <!--if(document.getElementById("id_start_address").value != false){-->
+                        <!--document.getElementById("id_start_address").value = "TIS";-->
+                     <!--}-->
+                <!--</script>-->
+            {%if route.route.lineList %}
+              <div class="function_thread" style="font-size:14px;">
+                  <div>トータル時間{{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
+                  <div>料金{{route.route.fare}}</div>
+              </div>
+            {% endif %}
+
+          </div>
+        </div>
 
     </form>
       <div class="map-embed">
-	    <div id="map-canvas" style="width:800px; height:700px"></div>
+	    <div id="map-canvas" style="width:100%; height:80%"></div>
       </div>
       <!--<div id="directions-panel" style="width:100%"></div>-->
       <!--<div id="directions-panel2" style="width:100%"></div>-->
-      <div id="function_table">
-        <ul  class="nav nav-tabs">
-          <!--<li class="active col-md-5"><a href="#tab1" data-toggle="tab" style="position:absolute; top:-100px">経路</a></li>-->
-          <!--<li class="col-md-10"><a href="#tab2" data-toggle="tab" style="position:absolute; top:-100px">会社概要</a></li>-->
-          <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
-          <span class="active col-md-3"><a href="#tab1" data-toggle="tab">経路</a></span>
-          <span class="col-md-3"><a href="#tab2" data-toggle="modal">会社概要</a></span>
-          <span class="col-md-3"><a href="#tab3" data-toggle="modal">ニュース</a></span>
-        </ul>
-          {% for i in route.route.lineList %}
-          <div>
-               <span width="70" style=" left:10%">{{i.stationFrom.stationName}}</span>
-               <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
-               <!--<td width="70">{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</td>-->
-
-
-               <span width="70" style="position:absolute; right:10%">{{i.stationTo.stationName}}</span>
-               <!--<td width="70">{{i.lineName}}</td>-->
-               <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
-          </div>
-          {% endfor %}
-
-      </div>
 
 
 
-         <div class="tab-content">
-              <div class="tab-pane active" id="tab1">
-                  <div>トータル時間{{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
-                  <div>料金{{route.route.fare}}</div>
-                               <span class='arrow-success'></span>
-                  <div class="container" style="width:350">
-                      <table class="table table-bordered table-striped table-condensed" border-color="red">
-                          <thead>
-                            <tr>
-                                <td width="70">出発場所</td>
-                                <td width="70">出発時間</td>
-                                <td width="70">到着時間</td>
-                                <td width="70">到着場所</td>
-                                <td width="70">手段</td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {% for i in route.route.lineList %}
-                           <tr>
-                               <td width="70">{{i.stationFrom.stationName}}</td>
-                               <td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>
-                               <td width="70">{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</td>
-                               <td width="70">{{i.stationTo.stationName}}</td>
-                               <td width="70">{{i.lineName}}</td>
-                               <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
-                           </tr>
-                            {% endfor %}
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-             </div>
+
+         <!--<div class="tab-content">-->
+              <!--<div class="tab-pane active" id="tab1">-->
+                  <!--&lt;!&ndash;<div>トータル時間{{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div>料金{{route.route.fare}}</div>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div class="container" style="width:350">&ndash;&gt;-->
+                      <!--&lt;!&ndash;<table class="table table-bordered table-striped table-condensed" border-color="red">&ndash;&gt;-->
+                          <!--&lt;!&ndash;&lt;!&ndash;<thead>&ndash;&gt;&ndash;&gt;-->
+                            <!--&lt;!&ndash;&lt;!&ndash;<tr>&ndash;&gt;&ndash;&gt;-->
+                                <!--&lt;!&ndash;&lt;!&ndash;<td width="70">出発場所</td>&ndash;&gt;&ndash;&gt;-->
+                                <!--&lt;!&ndash;&lt;!&ndash;<td width="70">出発時間</td>&ndash;&gt;&ndash;&gt;-->
+                                <!--&lt;!&ndash;&lt;!&ndash;<td width="70">到着時間</td>&ndash;&gt;&ndash;&gt;-->
+                                <!--&lt;!&ndash;&lt;!&ndash;<td width="70">到着場所</td>&ndash;&gt;&ndash;&gt;-->
+                                <!--&lt;!&ndash;&lt;!&ndash;<td width="70">手段</td>&ndash;&gt;&ndash;&gt;-->
+                            <!--&lt;!&ndash;&lt;!&ndash;</tr>&ndash;&gt;&ndash;&gt;-->
+                          <!--&lt;!&ndash;&lt;!&ndash;</thead>&ndash;&gt;&ndash;&gt;-->
+                          <!--&lt;!&ndash;&lt;!&ndash;<tbody>&ndash;&gt;&ndash;&gt;-->
+                            <!--&lt;!&ndash;&lt;!&ndash;{% for i in route.route.lineList %}&ndash;&gt;&ndash;&gt;-->
+                           <!--&lt;!&ndash;&lt;!&ndash;<tr>&ndash;&gt;&ndash;&gt;-->
+                               <!--&lt;!&ndash;&lt;!&ndash;<td width="70">{{i.stationFrom.stationName}}</td>&ndash;&gt;&ndash;&gt;-->
+                               <!--&lt;!&ndash;&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;&ndash;&gt;-->
+                               <!--&lt;!&ndash;&lt;!&ndash;<td width="70">{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</td>&ndash;&gt;&ndash;&gt;-->
+                               <!--&lt;!&ndash;&lt;!&ndash;<td width="70">{{i.stationTo.stationName}}</td>&ndash;&gt;&ndash;&gt;-->
+                               <!--&lt;!&ndash;&lt;!&ndash;<td width="70">{{i.lineName}}</td>&ndash;&gt;&ndash;&gt;-->
+                               <!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+                           <!--&lt;!&ndash;&lt;!&ndash;</tr>&ndash;&gt;&ndash;&gt;-->
+                            <!--&lt;!&ndash;&lt;!&ndash;{% endfor %}&ndash;&gt;&ndash;&gt;-->
+                          <!--&lt;!&ndash;&lt;!&ndash;</tbody>&ndash;&gt;&ndash;&gt;-->
+                      <!--&lt;!&ndash;&lt;!&ndash;</table>&ndash;&gt;&ndash;&gt;-->
+                  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+             <!--</div>-->
               <div class="modal fade" id="tab2">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -550,6 +611,12 @@
                     <!--var destination = new google.maps.LatLng({{i.stationTo.latitude}},{{i.stationTo.longitude}});-->
 
 
+                    //マップ表示のため最大緯度と経度を取得する
+                    var minLat = 999;
+                    var maxLat = 0;
+                    var minLng = 999;
+                    var maxLng = 0;
+
 
                      //それぞれのルートを表示
                      {% for i in route.route.lineList %}
@@ -561,14 +628,41 @@
                         } else{
                             root_line(origin,destination);
                         }
+
+
+                        <!--//中心座標を取得するため、緯度経度の最小値と最大値を取得する-->
+                        <!--if({{i.stationFrom.latitude}} < minLat){ minLat = {{i.stationFrom.latitude}}; }-->
+                        <!--if({{i.stationFrom.latitude}} > maxLat){ maxLat = {{i.stationFrom.latitude}}; }-->
+                        <!--if({{i.stationFrom.longitude}} < minLng){ minLng = {{i.stationFrom.longitude}}; }-->
+                        <!--if({{i.stationFrom.longitude}} > maxLng){ maxLng ={{i.stationFrom.longitude}}; }-->
+                        <!--if({{i.stationTo.latitude}} < minLat){ minLat = {{i.stationTo.latitude}}; }-->
+                        <!--if({{i.stationTo.latitude}} > maxLat){ maxLat = {{i.stationTo.latitude}}; }-->
+                        <!--if({{i.stationTo.longitude}} < minLng){ minLng = {{i.stationTo.longitude}}; }-->
+                        <!--if({{i.stationTo.longitude}} > maxLng){ maxLng ={{i.stationTo.longitude}}; }-->
+                        <!--//北西端の座標を設定-->
+                        <!--var sw = new google.maps.LatLng(maxLat,minLng);-->
+
+                        <!--//東南端の座標を設定-->
+                        <!--var ne = new google.maps.LatLng(minLat,maxLng);-->
+
+                        <!--//範囲を設定-->
+                        <!--var bounds = new google.maps.LatLngBounds(sw, ne);-->
+
+
                      {% endfor %}
+
+
+                      //マーカーが全て収まるように地図の中心とズームを調整して表示
+                        <!--map.fitBounds(bounds);-->
+
+
 
                      <!--root(address,destination);-->
                      <!--root(waypoint,waypoint2);-->
                      <!--root(address,waypoint2);-->
 
-                     directionsDisplay.setPanel(document.getElementById("directions-panel"));
-                     directionsDisplay.setPanel(document.getElementById("directions-panel2"));
+                     <!--directionsDisplay.setPanel(document.getElementById("directions-panel"));-->
+                     <!--directionsDisplay.setPanel(document.getElementById("directions-panel2"));-->
                     <!--alert(document.getElementById('{{i.stationFrom.latitude}}').innerText);-->
 
 
@@ -581,6 +675,7 @@
                               var Path = new google.maps.Polyline({
                               path: latlngs,
                               strokeOpacity: 1.0,
+                              strokeColor:"	#00ff00",
                             });
 
                             Path.setMap(map);
@@ -596,9 +691,9 @@
                                 <!--travelMode: google.maps.DirectionsTravelMode.TRANSIT,-->
                                 travelMode: google.maps.DirectionsTravelMode.WALKING,
                                 unitSystem: google.maps.DirectionsUnitSystem.METRIC,
-                                optimizeWaypoints: true,
-                                avoidHighways: false,
-                                avoidTolls: false,
+                                <!--optimizeWaypoints: true,-->
+                                <!--avoidHighways: false,-->
+                                <!--avoidTolls: false,-->
                                 <!--waypoints :wayPoints-->
                              };
                              directionsService.route(request,function(response,status){
@@ -610,6 +705,7 @@
                                  }
                              });
                     }
+
 
 
 
