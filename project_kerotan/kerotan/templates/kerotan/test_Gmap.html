@@ -16,7 +16,7 @@
          $('.arrow, [class^=arrow-]').bootstrapArrows();
      });
      </script>
-        <div style="background-color:black; color:white; text-aline:left; font-size:30px; height:50px; width:100%; margin:0 auto;">
+        <div id="bar">
           <img src="/static/img/flog_shadow2.jpg" style="width:50px; height:50px;">
             <span>
               ケロたん
@@ -31,7 +31,7 @@
             <!-- {{ form }} -->
             <!-- {% endfor %} -->
              <!--<tr style="margin-top:10px;">   -->
-         <div style="width=30%;float:left;">
+         <div style="width=30%;float:left;top:75px; left:25px; position:relative;">
             <div class="form-group">
                 <span style=" font-size:24px;"><label for="id_q">出発地</label></span>
                 <span>{{ form.start_address }}</span>
@@ -104,7 +104,7 @@
             <button type="submit" id="button" class ="btn btn-success btn-lg">検索
                 <i class="glyphicon glyphicon-search"></i>
             </button>
-            <button></button>
+            <!--<button></button>-->
 
         </div>
             <!--<button type="button class" class ="btn btn-default">Defaule </button>-->
@@ -132,11 +132,14 @@
               <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
               <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
               <li class="active col-ld-3"><a href="#tab1" data-toggle="tab">経路</a></li>
-              <li class="col-ld-4"><a href="#tab2" data-toggle="modal">会社概要</a></li>
-              <li class="col-ld-5"><a href="#tab3" data-toggle="modal">ニュース</a></li>
+              <li class="col-ld-4"><a href="#tab2" data-toggle="tab">会社概要</a></li>
+              <li class="col-ld-5"><a href="#tab3" data-toggle="tab">ニュース</a></li>
             </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab1">
               {% for i in route.route.lineList %}
-              <div class="function_thread">
+              <!--<div class="function_thread">-->
+              <div class="box function_thread">
                   <span id="thread1">
                       <div style="font-size: 20px;">
                           <script>
@@ -182,11 +185,53 @@
                      <!--}-->
                 <!--</script>-->
             {%if route.route.lineList %}
-              <div class="function_thread" style="font-size:14px;">
-                  <div>トータル時間{{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
-                  <div>料金{{route.route.fare}}</div>
+              <div style="font-size:14px; color:black; width:100%; text-align:right;">
+                  <div>総時間 : {{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
+                  <div>料金 : {{route.route.fare}}円</div>
               </div>
             {% endif %}
+
+              </div>
+              <div class="tab-pane" id="tab2" style="font-size:16px;">
+                  {{overview}}
+              </div>
+              <div class="tab-pane" id="tab3">
+
+                    <!--{% for j in news %}-->
+                    <!--<div>-->
+                        <!--&lt;!&ndash;<td width="70">{{j.Source}}</td>&ndash;&gt;-->
+                        <!--<span width="10%">{{j.Date}}</span>-->
+                        <!--<span width="20%" title="{{j.Description}}"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></span>-->
+                        <!--&lt;!&ndash;<td width="70">{{j.Url}}</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70%">{{j.Description}}</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70">{{i.stationTo.stationName}}</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70">{{i.lineName}}</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--{% endfor %}-->
+
+                <table border="1" style="word-break:break-all;font-size:16px;">
+                    {% for j in news %}
+                    <tr>
+                        <!--<td width="70">{{j.Source}}</td>-->
+                        <td width="30%">{{j.Date}}</td>
+                        <td width="70%" title="{{j.Description}}"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></td>
+                        <!--<td width="70">{{j.Url}}</td>-->
+                        <!--<td width="70%">{{j.Description}}</td>-->
+
+                        <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
+                        <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
+                        <!--<td width="70">{{i.stationTo.stationName}}</td>-->
+                        <!--<td width="70">{{i.lineName}}</td>-->
+                        <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
+                    </tr>
+                    {% endfor %}
+                </table>
+              </div>
+            </div>
+
 
           </div>
         </div>
@@ -232,51 +277,53 @@
                   <!--&lt;!&ndash;</div>&ndash;&gt;-->
               <!--</div>-->
              <!--</div>-->
-              <div class="modal fade" id="tab2">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">会社概要</h4>
-                      </div>
-                      <div class="modal-body">{{overview}}</div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">閉じる</button>
-                       </div>
-                    </div>
-                  </div>
-              </div>
-              <div class="modal fade" id="tab3">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">ニュース一覧</h4>
-                      </div>
-                      <div class="modal-body">
-                          <table border="1" style="word-break:break-all;">
-                            {% for j in news %}
-                            <tr>
-                                <!--<td width="70">{{j.Source}}</td>-->
-                                <td width="10%">{{j.Date}}</td>
-                                <td width="20%"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></td>
-                                <!--<td width="70">{{j.Url}}</td>-->
-                                <td width="70%">{{j.Description}}</td>
-                                <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
-                                <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
-                                <!--<td width="70">{{i.stationTo.stationName}}</td>-->
-                                <!--<td width="70">{{i.lineName}}</td>-->
-                                <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
-                            </tr>
-                            {% endfor %}
-                        </table>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">閉じる</button>
-                       </div>
-                    </div>
-                  </div>
-              </div>
+
+
+              <!--<div class="modal fade" id="tab2">-->
+                  <!--<div class="modal-dialog">-->
+                    <!--<div class="modal-content">-->
+                      <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                        <!--<h4 class="modal-title">会社概要</h4>-->
+                      <!--</div>-->
+                      <!--<div class="modal-body">{{overview}}</div>-->
+                      <!--<div class="modal-footer">-->
+                        <!--<button type="button" class="btn btn-primary" data-dismiss="modal">閉じる</button>-->
+                       <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+              <!--</div>-->
+              <!--<div class="modal fade" id="tab3">-->
+                  <!--<div class="modal-dialog">-->
+                    <!--<div class="modal-content">-->
+                      <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                        <!--<h4 class="modal-title">ニュース一覧</h4>-->
+                      <!--</div>-->
+                      <!--<div class="modal-body">-->
+                          <!--<table border="1" style="word-break:break-all;">-->
+                            <!--{% for j in news %}-->
+                            <!--<tr>-->
+                                <!--&lt;!&ndash;<td width="70">{{j.Source}}</td>&ndash;&gt;-->
+                                <!--<td width="10%">{{j.Date}}</td>-->
+                                <!--<td width="20%"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></td>-->
+                                <!--&lt;!&ndash;<td width="70">{{j.Url}}</td>&ndash;&gt;-->
+                                <!--<td width="70%">{{j.Description}}</td>-->
+                                <!--&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<td width="70">{{i.stationTo.stationName}}</td>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<td width="70">{{i.lineName}}</td>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>&ndash;&gt;-->
+                            <!--</tr>-->
+                            <!--{% endfor %}-->
+                        <!--</table>-->
+                      <!--</div>-->
+                      <!--<div class="modal-footer">-->
+                        <!--<button type="button" class="btn btn-primary" data-dismiss="modal">閉じる</button>-->
+                       <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+              <!--</div>-->
 
                 <!--//モーダル-->
 
