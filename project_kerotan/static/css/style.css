@@ -199,8 +199,11 @@
             li{
                 font-size:20px;
                 text-align:center;
-                background-color:mediumspringgreen;
-                display:inline-block
+                //background-color:mediumspringgreen;
+                background-color:black;
+                display:inline-block;
+                border-radius:10px;
+                background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c0c0c0), to(#7b7b7b));
             }
             .modal-content{
                 width:150%;
@@ -264,9 +267,9 @@
                 margin: 0 0 0 0; padding: 0;
             }
             blockquote#one {
-                width: 250px;
+                width: 275px;
                 background: #e3e3e3;
-                padding: 25px;
+                padding: 10px;
                 position: relative;
             }
             blockquote#one .arrow {
@@ -274,11 +277,11 @@
                 width: 0;
                 height: 0;
                 line-height: 0;
-                border-top: 40px solid white;
+                border-top: 40px solid aliceblue;
                 border-left: none;
                 border-right: 30px solid #e3e3e3;
                 position: absolute;
-                bottom: 60%;
+                bottom: 50%;
                 right: 100%;
             }
 
