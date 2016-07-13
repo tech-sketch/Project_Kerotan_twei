@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^kerotan/', include('kerotan.urls', namespace='kerotan')),
+    # url(r'^admin/', admin.site.urls),
+    # url(r'^kerotan/', include('kerotan.urls', namespace='kerotan')),
+    url(r'^', include('kerotan.urls', namespace='kerotan')),
 ]
