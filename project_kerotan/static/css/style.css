@@ -1,7 +1,7 @@
             .map-embed
             {
-                max-width: 70% ;
-                max-height:30%;
+                max-width: 60% ;
+                max-height:60%;
                 height: 0 ;
                 margin: 0 0 0 0 ;
                 padding: 0 0 56.25% ;
@@ -9,8 +9,8 @@
                 overflow: auto ;
                 index:5000;
                 position: relative ;
-                top: 70px ;
-                left: 100px ;
+                //top: 70px ;
+                left: 40% ;
             }
 
             .map-embed > div
@@ -112,6 +112,8 @@
                 display:block;
                 position:absolute;
                 //top:40%;
+                top:50px;
+                left:200px;
                 text-align:center;
                 padding:0px 0 0px;
                 margin:0px 0px 0px 0px;
@@ -197,8 +199,11 @@
             li{
                 font-size:20px;
                 text-align:center;
-                background-color:mediumspringgreen;
-                display:inline-block
+                //background-color:mediumspringgreen;
+                background-color:black;
+                display:inline-block;
+                border-radius:10px;
+                background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c0c0c0), to(#7b7b7b));
             }
             .modal-content{
                 width:150%;
@@ -206,10 +211,10 @@
 
             }
             #id_start_address{
-                width:300px;
+                width:90%;
             }
             #id_arriv_address{
-                width:300px;
+                width:90%;
             }
             span.arrow-success{
                 display:inline-block;
@@ -228,7 +233,7 @@
 
             }
 
-            #bar{
+            #bar1{
              background-color:black;
              color:white;
              text-aline:left;
@@ -242,3 +247,41 @@
             .tab-pane{
                 color:black;
             }
+            #bar2{
+             background-color:black;
+             color:white;
+             text-aline:left;
+             font-size:30px;
+             //height:100px;
+             //width:100%;
+             height:100%;
+             width:150px;
+             margin:0 auto;
+             position:fixed;
+             z-index:10000;
+            }
+            .tab-pane{
+                color:black;
+            }
+            blockquote {
+                margin: 0 0 0 0; padding: 0;
+            }
+            blockquote#one {
+                width: 275px;
+                background: #e3e3e3;
+                padding: 10px;
+                position: relative;
+            }
+            blockquote#one .arrow {
+                /* 吹き出しの部分 */
+                width: 0;
+                height: 0;
+                line-height: 0;
+                border-top: 40px solid aliceblue;
+                border-left: none;
+                border-right: 30px solid #e3e3e3;
+                position: absolute;
+                bottom: 50%;
+                right: 100%;
+            }
+
