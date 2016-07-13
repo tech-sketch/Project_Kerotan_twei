@@ -1,0 +1,951 @@
+{
+  "trainDoc": {
+    "condition": {
+      "pointTo": {
+        "coordinate": {
+          "longitude": {
+            "~T": "139.766246"
+          },
+          "latitude": {
+            "~T": "35.681298"
+          }
+        }
+      },
+      "stationTo": {
+        "stationName": {
+          "~T": "\u4eee\u60f3\u70b92"
+        },
+        "~A": {
+          "code": "10901"
+        }
+      },
+      "time": {
+        "min": {
+          "~T": "21"
+        },
+        "hour": {
+          "~T": "10"
+        },
+        "~A": {
+          "type": "imaginary"
+        }
+      },
+      "date": {
+        "weekPattern": {
+          "~T": "\u5e73\u65e5"
+        }
+      },
+      "stationFrom": {
+        "stationName": {
+          "~T": "\u4eee\u60f3\u70b91"
+        },
+        "~A": {
+          "code": "10900"
+        }
+      },
+      "pointFrom": {
+        "coordinate": {
+          "longitude": {
+            "~T": "139.690522"
+          },
+          "latitude": {
+            "~T": "35.696031"
+          }
+        }
+      },
+      "priorityOption": {
+        "option": {
+          "value": {
+            "~T": "start",
+            "~A": {
+              "default": "true"
+            }
+          },
+          "~A": {
+            "must": "true",
+            "name": "startOrReach"
+          }
+        }
+      }
+    },
+    "routeList": {
+      "route": [
+        {
+          "basicFare": {
+            "~T": "0"
+          },
+          "fare": {
+            "~T": "0"
+          },
+          "exceptCommuterBasicFare": {
+            "~T": "0"
+          },
+          "exceptCommuterFare": {
+            "~T": "0"
+          },
+          "lineList": {
+            "line": [
+              {
+                "lineName": {
+                  "~T": "\u79fb\u52d5"
+                },
+                "~A": {
+                  "groupId": "1"
+                },
+                "exceptCommuterBasicFare": {
+                  "~A": {
+                    "groupId": "1"
+                  }
+                },
+                "railKind": {
+                  "~T": "\u5f92\u6b69"
+                },
+                "stationTo": {
+                  "time": {
+                    "min": {
+                      "~T": "18"
+                    },
+                    "hour": {
+                      "~T": "12"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.766246"
+                    },
+                    "latitude": {
+                      "~T": "35.681298"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u4eee\u60f3\u70b92"
+                  },
+                  "~A": {
+                    "code": "10901"
+                  }
+                },
+                "exceptChargeInfoList": {
+                  "~A": {
+                    "groupId": "1"
+                  }
+                },
+                "fare": {
+                  "~A": {
+                    "groupId": "1"
+                  }
+                },
+                "chargeInfoList": {
+                  "~A": {
+                    "groupId": "1"
+                  }
+                },
+                "stationFrom": {
+                  "time": {
+                    "min": {
+                      "~T": "21"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.690522"
+                    },
+                    "latitude": {
+                      "~T": "35.696031"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u4eee\u60f3\u70b91"
+                  },
+                  "~A": {
+                    "code": "10900"
+                  }
+                },
+                "basicFare": {
+                  "~A": {
+                    "groupId": "1"
+                  }
+                },
+                "exceptCommuterFare": {
+                  "~A": {
+                    "groupId": "1"
+                  }
+                }
+              }
+            ]
+          },
+          "time": {
+            "min": {
+              "~T": "57"
+            },
+            "hour": {
+              "~T": "1"
+            },
+            "~A": {
+              "type": "accuracy"
+            }
+          },
+          "exceptCommuterCharge": {
+            "~T": "0"
+          },
+          "charge": {
+            "~T": "0"
+          }
+        },
+        {
+          "basicFare": {
+            "~T": "200"
+          },
+          "fare": {
+            "~T": "200"
+          },
+          "exceptCommuterBasicFare": {
+            "~T": "200"
+          },
+          "exceptCommuterFare": {
+            "~T": "200"
+          },
+          "lineList": {
+            "line": [
+              {
+                "lineName": {
+                  "~T": "\u79fb\u52d5"
+                },
+                "~A": {
+                  "groupId": "2"
+                },
+                "exceptCommuterBasicFare": {
+                  "~A": {
+                    "groupId": "2"
+                  }
+                },
+                "railKind": {
+                  "~T": "\u5f92\u6b69"
+                },
+                "stationTo": {
+                  "time": {
+                    "min": {
+                      "~T": "30"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.684869"
+                    },
+                    "latitude": {
+                      "~T": "35.693925"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u4e2d\u91ce\u5742\u4e0a"
+                  },
+                  "~A": {
+                    "code": "2656"
+                  },
+                  "stationExitInfo": {
+                    "coordinate": {
+                      "longitude": {
+                        "~T": "139.686444"
+                      },
+                      "latitude": {
+                        "~T": "35.694050"
+                      }
+                    },
+                    "toStationExitTime": {
+                      "~T": "7"
+                    },
+                    "toStationHomeTime": {
+                      "~T": "2"
+                    },
+                    "stationExitName": {
+                      "~T": "\uff21\uff11"
+                    },
+                    "stationExitCode": {
+                      "~T": "211"
+                    }
+                  }
+                },
+                "exceptChargeInfoList": {
+                  "~A": {
+                    "groupId": "4"
+                  }
+                },
+                "fare": {
+                  "~A": {
+                    "groupId": "2"
+                  }
+                },
+                "chargeInfoList": {
+                  "~A": {
+                    "groupId": "4"
+                  }
+                },
+                "stationFrom": {
+                  "time": {
+                    "min": {
+                      "~T": "21"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.690522"
+                    },
+                    "latitude": {
+                      "~T": "35.696031"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u4eee\u60f3\u70b91"
+                  },
+                  "~A": {
+                    "code": "10900"
+                  }
+                },
+                "basicFare": {
+                  "~A": {
+                    "groupId": "2"
+                  }
+                },
+                "exceptCommuterFare": {
+                  "~A": {
+                    "groupId": "2"
+                  }
+                }
+              },
+              {
+                "basicFare": {
+                  "~T": "200",
+                  "~A": {
+                    "groupId": "3"
+                  }
+                },
+                "exceptCommuterBasicFare": {
+                  "~T": "200",
+                  "~A": {
+                    "groupId": "3"
+                  }
+                },
+                "stationTo": {
+                  "time": {
+                    "min": {
+                      "~T": "54"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "imaginary"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.767681"
+                    },
+                    "latitude": {
+                      "~T": "35.681797"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u5927\u624b\u753a(\u6771\u4eac)"
+                  },
+                  "~A": {
+                    "code": "1709"
+                  }
+                },
+                "~A": {
+                  "groupId": "3"
+                },
+                "stationFrom": {
+                  "time": {
+                    "min": {
+                      "~T": "30"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "imaginary"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.684869"
+                    },
+                    "latitude": {
+                      "~T": "35.693925"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u4e2d\u91ce\u5742\u4e0a"
+                  },
+                  "~A": {
+                    "code": "2656"
+                  }
+                },
+                "lineName": {
+                  "~T": "\u6771\u4eac\u30e1\u30c8\u30ed\u4e38\u30ce\u5185\u7dda"
+                },
+                "kind": {
+                  "~T": "\u666e\u901a"
+                },
+                "railKind": {
+                  "~T": "\u79c1\u9244"
+                },
+                "exceptChargeInfoList": {
+                  "~A": {
+                    "groupId": "5"
+                  }
+                },
+                "fare": {
+                  "~T": "200",
+                  "~A": {
+                    "groupId": "3"
+                  }
+                },
+                "chargeInfoList": {
+                  "~A": {
+                    "groupId": "5"
+                  }
+                },
+                "exceptCommuterFare": {
+                  "~T": "200",
+                  "~A": {
+                    "groupId": "3"
+                  }
+                }
+              },
+              {
+                "lineName": {
+                  "~T": "\u79fb\u52d5"
+                },
+                "~A": {
+                  "groupId": "4"
+                },
+                "exceptCommuterBasicFare": {
+                  "~A": {
+                    "groupId": "4"
+                  }
+                },
+                "railKind": {
+                  "~T": "\u5f92\u6b69"
+                },
+                "stationTo": {
+                  "time": {
+                    "min": {
+                      "~T": "0"
+                    },
+                    "hour": {
+                      "~T": "11"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.766246"
+                    },
+                    "latitude": {
+                      "~T": "35.681298"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u4eee\u60f3\u70b92"
+                  },
+                  "~A": {
+                    "code": "10901"
+                  }
+                },
+                "exceptChargeInfoList": {
+                  "~A": {
+                    "groupId": "6"
+                  }
+                },
+                "fare": {
+                  "~A": {
+                    "groupId": "4"
+                  }
+                },
+                "chargeInfoList": {
+                  "~A": {
+                    "groupId": "6"
+                  }
+                },
+                "stationFrom": {
+                  "time": {
+                    "min": {
+                      "~T": "54"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.767681"
+                    },
+                    "latitude": {
+                      "~T": "35.681797"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u5927\u624b\u753a(\u6771\u4eac)"
+                  },
+                  "~A": {
+                    "code": "1709"
+                  },
+                  "stationExitInfo": {
+                    "coordinate": {
+                      "longitude": {
+                        "~T": "139.767486"
+                      },
+                      "latitude": {
+                        "~T": "35.682003"
+                      }
+                    },
+                    "toStationExitTime": {
+                      "~T": "2"
+                    },
+                    "toStationHomeTime": {
+                      "~T": "4"
+                    },
+                    "stationExitName": {
+                      "~T": "\u30a8\u30ec\u30d9\u30fc\u30bf\u30fc\u51fa\u53e3"
+                    },
+                    "stationExitCode": {
+                      "~T": "577"
+                    }
+                  }
+                },
+                "basicFare": {
+                  "~A": {
+                    "groupId": "4"
+                  }
+                },
+                "exceptCommuterFare": {
+                  "~A": {
+                    "groupId": "4"
+                  }
+                }
+              }
+            ]
+          },
+          "time": {
+            "min": {
+              "~T": "39"
+            },
+            "hour": {
+              "~T": "0"
+            },
+            "~A": {
+              "type": "imaginary"
+            }
+          },
+          "exceptCommuterCharge": {
+            "~T": "0"
+          },
+          "charge": {
+            "~T": "0"
+          }
+        },
+        {
+          "basicFare": {
+            "~T": "200"
+          },
+          "fare": {
+            "~T": "200"
+          },
+          "exceptCommuterBasicFare": {
+            "~T": "200"
+          },
+          "exceptCommuterFare": {
+            "~T": "200"
+          },
+          "lineList": {
+            "line": [
+              {
+                "lineName": {
+                  "~T": "\u79fb\u52d5"
+                },
+                "~A": {
+                  "groupId": "5"
+                },
+                "exceptCommuterBasicFare": {
+                  "~A": {
+                    "groupId": "5"
+                  }
+                },
+                "railKind": {
+                  "~T": "\u5f92\u6b69"
+                },
+                "stationTo": {
+                  "time": {
+                    "min": {
+                      "~T": "43"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.688775"
+                    },
+                    "latitude": {
+                      "~T": "35.707358"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u843d\u5408(\u6771\u4eac)"
+                  },
+                  "~A": {
+                    "code": "1760"
+                  },
+                  "stationExitInfo": {
+                    "coordinate": {
+                      "longitude": {
+                        "~T": "139.687717"
+                      },
+                      "latitude": {
+                        "~T": "35.707222"
+                      }
+                    },
+                    "toStationExitTime": {
+                      "~T": "21"
+                    },
+                    "toStationHomeTime": {
+                      "~T": "1"
+                    },
+                    "stationExitName": {
+                      "~T": "\uff12\uff41"
+                    },
+                    "stationExitCode": {
+                      "~T": "232"
+                    }
+                  }
+                },
+                "exceptChargeInfoList": {
+                  "~A": {
+                    "groupId": "7"
+                  }
+                },
+                "fare": {
+                  "~A": {
+                    "groupId": "5"
+                  }
+                },
+                "chargeInfoList": {
+                  "~A": {
+                    "groupId": "7"
+                  }
+                },
+                "stationFrom": {
+                  "time": {
+                    "min": {
+                      "~T": "21"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.690522"
+                    },
+                    "latitude": {
+                      "~T": "35.696031"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u4eee\u60f3\u70b91"
+                  },
+                  "~A": {
+                    "code": "10900"
+                  }
+                },
+                "basicFare": {
+                  "~A": {
+                    "groupId": "5"
+                  }
+                },
+                "exceptCommuterFare": {
+                  "~A": {
+                    "groupId": "5"
+                  }
+                }
+              },
+              {
+                "basicFare": {
+                  "~T": "200",
+                  "~A": {
+                    "groupId": "6"
+                  }
+                },
+                "exceptCommuterBasicFare": {
+                  "~T": "200",
+                  "~A": {
+                    "groupId": "6"
+                  }
+                },
+                "stationTo": {
+                  "time": {
+                    "min": {
+                      "~T": "1"
+                    },
+                    "hour": {
+                      "~T": "11"
+                    },
+                    "~A": {
+                      "type": "imaginary"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.767681"
+                    },
+                    "latitude": {
+                      "~T": "35.681797"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u5927\u624b\u753a(\u6771\u4eac)"
+                  },
+                  "~A": {
+                    "code": "1709"
+                  }
+                },
+                "~A": {
+                  "groupId": "6"
+                },
+                "stationFrom": {
+                  "time": {
+                    "min": {
+                      "~T": "43"
+                    },
+                    "hour": {
+                      "~T": "10"
+                    },
+                    "~A": {
+                      "type": "imaginary"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.688775"
+                    },
+                    "latitude": {
+                      "~T": "35.707358"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u843d\u5408(\u6771\u4eac)"
+                  },
+                  "~A": {
+                    "code": "1760"
+                  }
+                },
+                "lineName": {
+                  "~T": "\u6771\u4eac\u30e1\u30c8\u30ed\u6771\u897f\u7dda"
+                },
+                "kind": {
+                  "~T": "\u666e\u901a"
+                },
+                "railKind": {
+                  "~T": "\u79c1\u9244"
+                },
+                "exceptChargeInfoList": {
+                  "~A": {
+                    "groupId": "8"
+                  }
+                },
+                "fare": {
+                  "~T": "200",
+                  "~A": {
+                    "groupId": "6"
+                  }
+                },
+                "chargeInfoList": {
+                  "~A": {
+                    "groupId": "8"
+                  }
+                },
+                "exceptCommuterFare": {
+                  "~T": "200",
+                  "~A": {
+                    "groupId": "6"
+                  }
+                }
+              },
+              {
+                "lineName": {
+                  "~T": "\u79fb\u52d5"
+                },
+                "~A": {
+                  "groupId": "7"
+                },
+                "exceptCommuterBasicFare": {
+                  "~A": {
+                    "groupId": "7"
+                  }
+                },
+                "railKind": {
+                  "~T": "\u5f92\u6b69"
+                },
+                "stationTo": {
+                  "time": {
+                    "min": {
+                      "~T": "5"
+                    },
+                    "hour": {
+                      "~T": "11"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.766246"
+                    },
+                    "latitude": {
+                      "~T": "35.681298"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u4eee\u60f3\u70b92"
+                  },
+                  "~A": {
+                    "code": "10901"
+                  }
+                },
+                "exceptChargeInfoList": {
+                  "~A": {
+                    "groupId": "9"
+                  }
+                },
+                "fare": {
+                  "~A": {
+                    "groupId": "7"
+                  }
+                },
+                "chargeInfoList": {
+                  "~A": {
+                    "groupId": "9"
+                  }
+                },
+                "stationFrom": {
+                  "time": {
+                    "min": {
+                      "~T": "1"
+                    },
+                    "hour": {
+                      "~T": "11"
+                    },
+                    "~A": {
+                      "type": "accuracy"
+                    }
+                  },
+                  "coordinate": {
+                    "longitude": {
+                      "~T": "139.767681"
+                    },
+                    "latitude": {
+                      "~T": "35.681797"
+                    }
+                  },
+                  "stationName": {
+                    "~T": "\u5927\u624b\u753a(\u6771\u4eac)"
+                  },
+                  "~A": {
+                    "code": "1709"
+                  },
+                  "stationExitInfo": {
+                    "coordinate": {
+                      "longitude": {
+                        "~T": "139.767486"
+                      },
+                      "latitude": {
+                        "~T": "35.682003"
+                      }
+                    },
+                    "toStationExitTime": {
+                      "~T": "2"
+                    },
+                    "toStationHomeTime": {
+                      "~T": "2"
+                    },
+                    "stationExitName": {
+                      "~T": "\u30a8\u30ec\u30d9\u30fc\u30bf\u30fc\u51fa\u53e3"
+                    },
+                    "stationExitCode": {
+                      "~T": "577"
+                    }
+                  }
+                },
+                "basicFare": {
+                  "~A": {
+                    "groupId": "7"
+                  }
+                },
+                "exceptCommuterFare": {
+                  "~A": {
+                    "groupId": "7"
+                  }
+                }
+              }
+            ]
+          },
+          "time": {
+            "min": {
+              "~T": "44"
+            },
+            "hour": {
+              "~T": "0"
+            },
+            "~A": {
+              "type": "imaginary"
+            }
+          },
+          "exceptCommuterCharge": {
+            "~T": "0"
+          },
+          "charge": {
+            "~T": "0"
+          }
+        }
+      ]
+    },
+    "~A": {
+      "status": "0"
+    }
+  }
+}
