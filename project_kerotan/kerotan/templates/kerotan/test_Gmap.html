@@ -22,203 +22,7 @@
               <!--ケロたん-->
           <!--</span>-->
         <!--</div>-->
-     <form action="{% url 'kerotan:display_google_map' %}" method="post">
-     {% csrf_token %}
-        <div id="bar2">
-          <img src="/static/img/flog_shadow2.jpg" style="width:50px; height:50px;">
-            <div>
-              ケロたん
-          </div>
-            <div class="form-group">
-                <span style=" font-size:24px;"><label for="id_q">出発地</label></span>
-                <span>{{ form.start_address }}</span>
-                    <script>
-                    if(document.getElementById("id_start_address").value == false){
-                        document.getElementById("id_start_address").value = "TIS";
-                     }
-                        <!--var origin_address = document.getElementById("id_start_address");-->
-                        <!--var swap = origin_address.value;-->
-                        $('#id_start_address').addClass('form-control');
-                        <!--origin_address.outerHTML = '<div class="form-group"><input id="id_start_address" maxlength="100" name="start_address" type="text" value ="T" class="form-control"></div>';-->
-                        <!--alert(document.getElementById("id_start_address"));-->
-                    </script>
-            </div>
-            <div class="form-group">
-                <span style="font-size:24px;"><label for="id_q">目的地</label></span>
-                <span>{{ form.arriv_address }}</span>
-                <script>
-                        <!--var destination_address = document.getElementById("id_arriv_address");-->
-                        <!--var swap = origin_address.value;-->
-                        $('#id_arriv_address').addClass('form-control');
-                        <!--origin_address.outerHTML = '<div class="form-group"><input id="id_start_address" maxlength="100" name="start_address" type="text" value ="T" class="form-control"></div>';-->
-                        <!--alert(document.getElementById("id_start_address"));-->
-                </script>
-            </div>
-            <div>
-                <button type="submit" id="button" class ="btn btn-success btn-lg">検索
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
-                <!--<button></button>-->
-                <ul  class="nav nav-stacked">
-                  <!--<li class="active col-md-5"><a href="#tab1" data-toggle="tab" style="position:absolute; top:-100px">経路</a></li>-->
-                  <!--<li class="col-md-10"><a href="#tab2" data-toggle="tab" style="position:absolute; top:-100px">会社概要</a></li>-->
-                  <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
-                  <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
-                  <!--<li class="active col-ld-3"><a href="#tab1" data-toggle="tab">-->
-                      <!--<img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">-->
-                      <!--<div style="position:absolute; bottom:40px; left:50px;" >経路</div>-->
-                  <!--</a></li>-->
-                    <li class="col-ld-3"><a href="#tab1" data-toggle="tab" style="color:black;">経路</a></li>
-                    <div style="position:relative; left:100px;">
-                        <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
-                    </div>
-                    <li class="col-ld-4"><a href="#tab2" data-toggle="tab" style="color:black;">会社概要</a></li>
-                    <div style="position:relative; left:100px;">
-                        <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
-                    </div>
-                    <li class="col-ld-5"><a href="#tab3" data-toggle="tab" style="color:black;">ニュース</a></li>
-                    <div style="position:relative; left:100px;">
-                        <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
-                    </div>
-                </ul>
 
-            </div>
-        </div>
-    </form>
-     <!-- {{ formset.management_form }} -->
-        <!--<table style="margin-top:10px;">-->
-            <!-- {{ formset }} -->
-            <!-- {% for form in formset %} -->
-            <!-- {{ form }} -->
-            <!-- {% endfor %} -->
-             <!--<tr style="margin-top:10px;">   -->
-         <!--<div style="width=30%;float:left;top:75px; left:25px; position:relative;">-->
-
-
-        <div id="function_table">
-
-            <div class="tab-content">
-              <div class="tab-pane" id="tab1">
-
-            <div>
-            <blockquote id="one">
-            <p>
-
-              {% for i in route.route.lineList %}
-              <!--<div class="function_thread">-->
-              <div class="box function_thread">
-                  <span id="thread1">
-                      <div style="font-size: 20px;">
-                          <script>
-                            if("{{i.stationFrom.stationName}}" == "仮想点1"){
-                                document.write(document.getElementById("id_start_address").value);
-                            }else{
-                                document.write("{{i.stationFrom.stationName}}");
-                            }
-                          </script>
-                      </div>
-                      <div>{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</div>
-                  </span>
-                  <span id="thread2">
-                      <script>
-                        var str = "{{i.lineName}}";
-                        <!--if(str.match(/線/)){-->
-                            <!--document.write("<img src="/static/img/metro.png">");-->
-                        <!--}-->
-                      </script>
-                    <div class='arrow-success' data-angle='90'></div>
-                    <div>
-                        {{i.lineName}}
-                    </div>
-
-                  </span>
-                  <span id="thread3">
-                    <div style="font-size: 20px;">
-                          <script>
-                            if("{{i.stationTo.stationName}}" == "仮想点2"){
-                                document.write(document.getElementById("id_arriv_address").value);
-                            }else{
-                                document.write("{{i.stationTo.stationName}}");
-                            }
-                          </script>
-                    </div>
-                    <div >{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</div>
-                  </span>
-              </div>
-              {% endfor %}
-                <!--<script>-->
-                    <!--if(document.getElementById("id_start_address").value != false){-->
-                        <!--document.getElementById("id_start_address").value = "TIS";-->
-                     <!--}-->
-                <!--</script>-->
-            {%if route.route.lineList %}
-              <div style="font-size:14px; color:black; width:100%; text-align:right;">
-                  <div>総時間 : {{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
-                  <div>料金 : {{route.route.fare}}円</div>
-              </div>
-            {% endif %}
-            </p>
-            <span style="position:fixed;left:175px;;" class="arrow"/> <!-- 吹き出し部分 -->
-            </blockquote>
-            </div>
-              </div>
-
-
-              <div class="tab-pane" id="tab2" style="font-size:16px;">
-                  <script>
-                      overview = "{{overview}}";
-                      result = overview.split
-                  </script>
-                  {{overview}}
-              </div>
-              <!--<div class="tab-pane" id="tab2" style="font-size:16px;">-->
-                  <!--{{overview}}-->
-              <!--</div>                -->
-              <div class="tab-pane" id="tab3">
-
-                    <!--{% for j in news %}-->
-                    <!--<div>-->
-                        <!--&lt;!&ndash;<td width="70">{{j.Source}}</td>&ndash;&gt;-->
-                        <!--<span width="10%">{{j.Date}}</span>-->
-                        <!--<span width="20%" title="{{j.Description}}"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></span>-->
-                        <!--&lt;!&ndash;<td width="70">{{j.Url}}</td>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<td width="70%">{{j.Description}}</td>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<td width="70">{{i.stationTo.stationName}}</td>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<td width="70">{{i.lineName}}</td>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>&ndash;&gt;-->
-                    <!--</div>-->
-                    <!--{% endfor %}-->
-
-                <table border="1" style="word-break:break-all;font-size:16px;">
-                    {% for j in news %}
-                    <tr>
-                        <!--<td width="70">{{j.Source}}</td>-->
-                        <td width="30%">{{j.Date}}</td>
-                        <td width="70%" title="{{j.Description}}"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></td>
-                        <!--<td width="70">{{j.Url}}</td>-->
-                        <!--<td width="70%">{{j.Description}}</td>-->
-
-                        <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
-                        <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
-                        <!--<td width="70">{{i.stationTo.stationName}}</td>-->
-                        <!--<td width="70">{{i.lineName}}</td>-->
-                        <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
-                    </tr>
-                    {% endfor %}
-                </table>
-              </div>
-            </div>
-
-
-          <!--</div>-->
-        </div>
-
-
-      <div class="map-embed">
-	    <div id="map-canvas" style="width:100%; height:80%"></div>
-      </div>
       <!--<div id="directions-panel" style="width:100%"></div>-->
       <!--<div id="directions-panel2" style="width:100%"></div>-->
 
@@ -341,6 +145,255 @@
      }
  </script>
   <body onload="timing_load()">
+     {% csrf_token %}
+        <div id="bar2">
+        <form action="{% url 'kerotan:display_google_map' %}" method="get">
+            <button type="submit" id="top_button">
+              <img src="/static/img/flog_shadow2.jpg" style="width:50px; height:50px;">
+                <div>
+                  ケロたん
+              </div>
+            </button>
+            </form>
+         <form action="{% url 'kerotan:display_google_map' %}" method="post">
+          {% csrf_token %}
+            <div class="form-group">
+                <span style=" font-size:24px;"><label for="id_q">出発地</label></span>
+                <span>{{ form.start_address }}</span>
+                    <script>
+                    if(document.getElementById("id_start_address").value == false){
+                        document.getElementById("id_start_address").value = "TIS";
+                     }
+                        <!--var origin_address = document.getElementById("id_start_address");-->
+                        <!--var swap = origin_address.value;-->
+                        $('#id_start_address').addClass('form-control');
+                        <!--origin_address.outerHTML = '<div class="form-group"><input id="id_start_address" maxlength="100" name="start_address" type="text" value ="T" class="form-control"></div>';-->
+                        <!--alert(document.getElementById("id_start_address"));-->
+                    </script>
+            </div>
+            <div class="form-group">
+                <span style="font-size:24px;"><label for="id_q">目的地</label></span>
+                <span>{{ form.arriv_address }}</span>
+                <script>
+                        <!--var destination_address = document.getElementById("id_arriv_address");-->
+                        <!--var swap = origin_address.value;-->
+                        $('#id_arriv_address').addClass('form-control');
+                        <!--origin_address.outerHTML = '<div class="form-group"><input id="id_start_address" maxlength="100" name="start_address" type="text" value ="T" class="form-control"></div>';-->
+                        <!--alert(document.getElementById("id_start_address"));-->
+                </script>
+            </div>
+            <div>
+                <button type="submit" id="button" class ="btn btn-success btn-lg">検索
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+                <!--<button></button>-->
+                <ul  class="nav nav-stacked">
+                  <!--<li class="active col-md-5"><a href="#tab1" data-toggle="tab" style="position:absolute; top:-100px">経路</a></li>-->
+                  <!--<li class="col-md-10"><a href="#tab2" data-toggle="tab" style="position:absolute; top:-100px">会社概要</a></li>-->
+                  <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
+                  <!--<li class="col-md-15"><a href="#tab3" data-toggle="tab" style="position:absolute; top:-100px">ニュース</a></li>-->
+                  <!--<li class="active col-ld-3"><a href="#tab1" data-toggle="tab">-->
+                      <!--<img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">-->
+                      <!--<div style="position:absolute; bottom:40px; left:50px;" >経路</div>-->
+                  <!--</a></li>-->
+                    <li class="col-ld-3"><a href="#tab1" data-toggle="tab" style="color:black;">経路</a></li>
+                    <div style="position:relative; left:100px;">
+                        <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
+                    </div>
+                    <li class="col-ld-4"><a href="#tab2" data-toggle="tab" style="color:black;">会社概要</a></li>
+                    <div style="position:relative; left:100px;">
+                        <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
+                    </div>
+                    <li class="col-ld-5"><a href="#tab3" data-toggle="tab" style="color:black;">ニュース</a></li>
+                    <div style="position:relative; left:100px;">
+                        <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
+                    </div>
+                </ul>
+
+            </div>
+        </div>
+    </form>
+     <!-- {{ formset.management_form }} -->
+        <!--<table style="margin-top:10px;">-->
+            <!-- {{ formset }} -->
+            <!-- {% for form in formset %} -->
+            <!-- {{ form }} -->
+            <!-- {% endfor %} -->
+             <!--<tr style="margin-top:10px;">   -->
+         <!--<div style="width=30%;float:left;top:75px; left:25px; position:relative;">-->
+
+
+        <div id="function_table">
+
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab1">
+                  {% if route.route.lineList %}
+            <div>
+            <blockquote class="one" style="z-index:5;">
+            <p>
+
+              {% for i in route.route.lineList %}
+              <!--<div class="function_thread">-->
+              <div class="box function_thread" style="z-index:10;">
+                  <span id="thread1">
+                      <div style="font-size: 20px;">
+                          <script>
+                            if("{{i.stationFrom.stationName}}" == "仮想点1"){
+                                document.write(document.getElementById("id_start_address").value);
+                            }else{
+                                document.write("{{i.stationFrom.stationName}}");
+                            }
+                          </script>
+                      </div>
+                      <div>{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</div>
+                  </span>
+                  <span id="thread2">
+                      <script>
+                        var str = "{{i.lineName}}";
+                        <!--if(str.match(/線/)){-->
+                            <!--document.write("<img src="/static/img/metro.png">");-->
+                        <!--}-->
+                      </script>
+                    <div class='arrow-success' data-angle='90'></div>
+                    <div>
+                        {{i.lineName}}
+                    </div>
+
+                  </span>
+                  <span id="thread3">
+                    <div style="font-size: 20px;">
+                          <script>
+                            if("{{i.stationTo.stationName}}" == "仮想点2"){
+                                document.write(document.getElementById("id_arriv_address").value);
+                            }else{
+                                document.write("{{i.stationTo.stationName}}");
+                            }
+                          </script>
+                    </div>
+                    <div >{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</div>
+                  </span>
+              </div>
+              {% endfor %}
+                <!--<script>-->
+                    <!--if(document.getElementById("id_start_address").value != false){-->
+                        <!--document.getElementById("id_start_address").value = "TIS";-->
+                     <!--}-->
+                <!--</script>-->
+            {%if route.route.lineList %}
+              <div style="font-size:14px; color:black; width:100%; text-align:right;">
+                  <div>総時間 : {{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
+                  <div>料金 : {{route.route.fare}}円</div>
+              </div>
+            {% endif %}
+            </p>
+            <div class="arrow"  style="position:fixed;left:175px;index:1;" /> <!-- 吹き出し部分 -->
+            </blockquote>
+            </div>
+                  {% endif %}
+              </div>
+
+
+
+             <div class="tab-pane" id="tab2">
+                  {% if route.route.lineList %}
+            <div>
+            <blockquote class="one" style="z-index:5;">
+            <p>
+
+              <!--<div class="function_thread">-->
+              <div class="box function_thread" style="z-index:10;">
+                    <div>
+                        {{overview}}
+                    </div>
+              </div>
+                <!--<script>-->
+                    <!--if(document.getElementById("id_start_address").value != false){-->
+                        <!--document.getElementById("id_start_address").value = "TIS";-->
+                     <!--}-->
+                <!--</script>-->
+            </p>
+            <div class="arrow"  style="position:fixed;left:175px;index:1;" /> <!-- 吹き出し部分 -->
+            </blockquote>
+            </div>
+                  {% endif %}
+              </div>
+
+
+              <!--<div class="tab-pane" id="tab2" style="font-size:16px;">-->
+                <!--{%if overview %}-->
+                  <!--<div>-->
+                <!--<blockquote class="one" style="z-index:5">-->
+                    <!--<p>-->
+                <!--<div  sytle="position:relative;z-index:10;display:inline-block;">-->
+                  <!--<script>-->
+                      <!--overview = "{{overview}}";-->
+                      <!--result = overview.split;-->
+                  <!--</script>-->
+                  <!--{{overview}}-->
+                <!--</div>-->
+                    <!--</p>-->
+                <!--<div  class="arrow" style="position:fixed;left:175px;index:1;"/> &lt;!&ndash; 吹き出し部分 &ndash;&gt;-->
+                <!--</blockquote>-->
+                <!--</div>-->
+                  <!--{% endif %}-->
+              <!--</div>-->
+
+
+
+              <div class="tab-pane" id="tab3">
+                  {%if news %}
+                <div>
+                <blockquote class="one" style="z-index:5;">
+                <p>
+                    <!--{% for j in news %}-->
+                    <!--<div>-->
+                        <!--&lt;!&ndash;<td width="70">{{j.Source}}</td>&ndash;&gt;-->
+                        <!--<span width="10%">{{j.Date}}</span>-->
+                        <!--<span width="20%" title="{{j.Description}}"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></span>-->
+                        <!--&lt;!&ndash;<td width="70">{{j.Url}}</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70%">{{j.Description}}</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70">{{i.stationTo.stationName}}</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td width="70">{{i.lineName}}</td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--{% endfor %}-->
+              <div class="box function_thread" style="z-index:10;">
+                <table border="1" style="word-break:break-all;font-size:16px;">
+                    {% for j in news %}
+                    <tr>
+                        <!--<td width="70">{{j.Source}}</td>-->
+                        <td width="30%">{{j.Date}}</td>
+                        <td width="70%" title="{{j.Description}}"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></td>
+                        <!--<td width="70">{{j.Url}}</td>-->
+                        <!--<td width="70%">{{j.Description}}</td>-->
+
+                        <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
+                        <!--<td width="70">{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</td>-->
+                        <!--<td width="70">{{i.stationTo.stationName}}</td>-->
+                        <!--<td width="70">{{i.lineName}}</td>-->
+                        <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
+                    </tr>
+                    {% endfor %}
+                </table>
+              </div>
+                </p>
+                <span class="arrow" style="position:fixed;left:175px;index:1;" /> <!-- 吹き出し部分 -->
+                </blockquote>
+                </div>
+                  {% endif %}
+              </div>
+            </div>
+
+
+          <!--</div>-->
+        </div>
+
+
+      <div class="map-embed">
+	    <div id="map-canvas" style="width:800px; height:600px"></div>
+      </div>
         <!--<div id="buckground_image"></div>-->
   <!--<body onload="initialize()">-->
 <!--<div id="map_canvas" style="width:500px; height:300px"></div>-->
@@ -628,29 +681,32 @@
 
 
                         <!--//中心座標を取得するため、緯度経度の最小値と最大値を取得する-->
-                        <!--if({{i.stationFrom.latitude}} < minLat){ minLat = {{i.stationFrom.latitude}}; }-->
-                        <!--if({{i.stationFrom.latitude}} > maxLat){ maxLat = {{i.stationFrom.latitude}}; }-->
-                        <!--if({{i.stationFrom.longitude}} < minLng){ minLng = {{i.stationFrom.longitude}}; }-->
-                        <!--if({{i.stationFrom.longitude}} > maxLng){ maxLng ={{i.stationFrom.longitude}}; }-->
-                        <!--if({{i.stationTo.latitude}} < minLat){ minLat = {{i.stationTo.latitude}}; }-->
-                        <!--if({{i.stationTo.latitude}} > maxLat){ maxLat = {{i.stationTo.latitude}}; }-->
-                        <!--if({{i.stationTo.longitude}} < minLng){ minLng = {{i.stationTo.longitude}}; }-->
-                        <!--if({{i.stationTo.longitude}} > maxLng){ maxLng ={{i.stationTo.longitude}}; }-->
-                        <!--//北西端の座標を設定-->
-                        <!--var sw = new google.maps.LatLng(maxLat,minLng);-->
+                        if({{i.stationFrom.latitude}} < minLat){ minLat = {{i.stationFrom.latitude}}; }
+                        if({{i.stationFrom.latitude}} > maxLat){ maxLat = {{i.stationFrom.latitude}}; }
+                        if({{i.stationFrom.longitude}} < minLng){ minLng = {{i.stationFrom.longitude}}; }
+                        if({{i.stationFrom.longitude}} > maxLng){ maxLng ={{i.stationFrom.longitude}}; }
+                        if({{i.stationTo.latitude}} < minLat){ minLat = {{i.stationTo.latitude}}; }
+                        if({{i.stationTo.latitude}} > maxLat){ maxLat = {{i.stationTo.latitude}}; }
+                        if({{i.stationTo.longitude}} < minLng){ minLng = {{i.stationTo.longitude}}; }
+                        if({{i.stationTo.longitude}} > maxLng){ maxLng ={{i.stationTo.longitude}}; }
+                        //北西端の座標を設定
+                        var sw = new google.maps.LatLng(maxLat,minLng);
 
-                        <!--//東南端の座標を設定-->
-                        <!--var ne = new google.maps.LatLng(minLat,maxLng);-->
+                        //東南端の座標を設定
+                        var ne = new google.maps.LatLng(minLat,maxLng);
 
-                        <!--//範囲を設定-->
-                        <!--var bounds = new google.maps.LatLngBounds(sw, ne);-->
+                        //範囲を設定
+                        var bounds = new google.maps.LatLngBounds(sw, ne);
 
 
                      {% endfor %}
 
 
                       //マーカーが全て収まるように地図の中心とズームを調整して表示
-                        <!--map.fitBounds(bounds);-->
+                      setTimeout(function(){
+                            map.fitBounds(bounds);
+                        },500);
+
 
 
 
@@ -693,6 +749,11 @@
                                 <!--avoidTolls: false,-->
                                 <!--waypoints :wayPoints-->
                              };
+                             rendererOptions = {
+                                draggable: true,
+                                preserveViewport:false,
+                                suppressMarkers : true,
+                            };
                              directionsService.route(request,function(response,status){
                                  if (status == google.maps.DirectionsStatus.OK){
                                      var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
@@ -701,6 +762,26 @@
                                      directionsDisplay.setMap(map);
                                  }
                              });
+
+                          <!--var icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + i + "|FF0000|000000";-->
+                          <!--&lt;!&ndash;if (i == 0) {&ndash;&gt;-->
+                            <!--&lt;!&ndash;//Icon as start position&ndash;&gt;-->
+                            <!--&lt;!&ndash;icon = "https://chart.googleapis.com/chart?chst=d_map_xpin_icon&chld=pin_star|car-dealer|00FFFF|FF0000";&ndash;&gt;-->
+                          <!--&lt;!&ndash;}&ndash;&gt;-->
+                          <!--var marker = new google.maps.Marker({-->
+                            <!--position: origin, -->
+                            <!--map: map,-->
+                            <!--icon: icon-->
+                          <!--});-->
+                          <!--attachInstructionText(marker, myRoute.steps[i].instructions);-->
+                          <!--markerArray.push(marker);-->
+                        <!--}-->
+                        <!--//Icon as end position-->
+                        <!--var marker = new google.maps.Marker({-->
+                          <!--position: myRoute.steps[i - 1].end_point, -->
+                          <!--map: map,-->
+                          <!--icon: "https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=flag|ADDE63"-->
+                        <!--});                             -->
                     }
 
 

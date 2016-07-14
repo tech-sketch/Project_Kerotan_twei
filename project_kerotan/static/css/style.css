@@ -1,16 +1,15 @@
             .map-embed
             {
-                max-width: 60% ;
-                max-height:60%;
-                height: 0 ;
+                max-width: 800px;
+                max-height:800px;
                 margin: 0 0 0 0 ;
                 padding: 0 0 56.25% ;
 
-                overflow: auto ;
+                //overflow: auto ;
                 index:5000;
                 position: relative ;
-                //top: 70px ;
-                left: 40% ;
+                top: 10px ;
+                left: 500px ;
             }
 
             .map-embed > div
@@ -82,6 +81,16 @@
                 color:#fff;
                 background-color:#49a9d4;
                 border-radius:5px;
+            }
+            #top_button{
+                width: auto;
+                text-align:center;
+                padding:0;
+                border:0;
+                background-color:black;
+                margin:0;
+                background:none;
+                overflow:visible;
             }
             input.button{
                 background-image:url
@@ -167,7 +176,7 @@
                 //-webkit-box-shadow: 10px 10px 0px #F00;
                 //box-shadow: 10px 10px 0px #F00;
                 //border:2px solid #F2F2F2;
-                 background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFA500), to(#FFD700));
+                 background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffff33), to(#ffff99));
             }
             #thread1{
                 position:relative;
@@ -227,6 +236,7 @@
             }
             .container{
                 width:100%;
+                height:100%;
                 max-height:100%;
                 margin:0;
                 padding:0;
@@ -266,22 +276,30 @@
             blockquote {
                 margin: 0 0 0 0; padding: 0;
             }
-            blockquote#one {
+            .one {
                 width: 275px;
                 background: #e3e3e3;
                 padding: 10px;
                 position: relative;
             }
-            blockquote#one .arrow {
+            .one .arrow {
                 /* 吹き出しの部分 */
                 width: 0;
                 height: 0;
                 line-height: 0;
-                border-top: 40px solid aliceblue;
-                border-left: none;
-                border-right: 30px solid #e3e3e3;
-                position: absolute;
-                bottom: 50%;
+                //border-top: 40px solid aliceblue;
+                //border-left: none;
+                //border-right: 30px solid #e3e3e3;
+                //border-bottom:none;
+                border-top: 300px solid #e3e3e3;
+                border-bottom: 0px solid #e3e3e3;
+                border-left: 20px solid rgba(0,0,0,0.0);
+                border-right: 40px solid rgba(0,0,0,0.0);
+                //border-width: 100px 50px 50px 30px;
+                position: relative;
+                bottom: 250px;
                 right: 100%;
+                transform: rotate(20deg);
             }
+
 
