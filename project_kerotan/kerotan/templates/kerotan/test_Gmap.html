@@ -301,8 +301,17 @@
             <p>
 
               <!--<div class="function_thread">-->
-              <div class="box function_thread" style="z-index:10;">
+              <div class="box function_thread" style="z-index:10;background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e3e3e3), to(#e3e3e3))">
                     <div>
+                        <div>
+                            <img src="{{image_company_chart}}" style="width:100%; height:100%;">
+                        </div>
+                        <div>
+                            <img src="{{image_company_building}}" style="width:70%; height:70%;">
+                        </div>
+                        <br>
+                    </div>
+                    <div style="font-size:14px;text-align:left;">
                         {{overview}}
                     </div>
               </div>
@@ -359,13 +368,22 @@
                         <!--&lt;!&ndash;<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>&ndash;&gt;-->
                     <!--</div>-->
                     <!--{% endfor %}-->
-              <div class="box function_thread" style="z-index:10;">
-                <table border="1" style="word-break:break-all;font-size:16px;">
+
+                <!--<table border="1" style="word-break:break-all;font-size:16px;">-->
                     {% for j in news %}
-                    <tr>
+                    <div class="box function_thread" style="z-index:10;font-size:16px;">
+                    <!--<tr>-->
                         <!--<td width="70">{{j.Source}}</td>-->
-                        <td width="30%">{{j.Date}}</td>
-                        <td width="70%" title="{{j.Description}}"><a href="{{j.Url}}" target="_blank">{{j.Title}}</a></td>
+                        <div width="30%;" style="float:left;color:#7f7f7f;font-size:12px;">
+                            <script>
+                            var value = "{{j.Date}}";
+                            var result = value.replace( /T/g , " " ) ;
+                            result = result.replace( /Z/g , " " ) ;
+                            document.write(result);
+                            </script>
+                        </div>
+                        <br>
+                        <div width="70%" title="{{j.Description}}" style="margin:5px 10px 10px 10px;"><a href="{{j.Url}}" target="_blank" style="font-size:16px">{{j.Title}}</a></div>
                         <!--<td width="70">{{j.Url}}</td>-->
                         <!--<td width="70%">{{j.Description}}</td>-->
 
@@ -374,10 +392,11 @@
                         <!--<td width="70">{{i.stationTo.stationName}}</td>-->
                         <!--<td width="70">{{i.lineName}}</td>-->
                         <!--<td id="{{i.stationFrom.latitude}}">{{i.stationFrom.latitude}}</td>-->
-                    </tr>
+                    <!--</tr>-->
+                    </div>
                     {% endfor %}
-                </table>
-              </div>
+                <!--</table>-->
+
                 </p>
                 <span class="arrow" style="position:fixed;left:175px;index:1;" /> <!-- 吹き出し部分 -->
                 </blockquote>
@@ -666,18 +685,37 @@
                     var maxLat = 0;
                     var minLng = 999;
                     var maxLng = 0;
-
+                    var num = 2;
 
                      //それぞれのルートを表示
                      {% for i in route.route.lineList %}
                         <!--alert("a");-->
                         var origin = new google.maps.LatLng({{i.stationFrom.latitude}},{{i.stationFrom.longitude}});
                         var destination = new google.maps.LatLng({{i.stationTo.latitude}},{{i.stationTo.longitude}});
+
                         if("{{i.lineName}}" == "移動"){
                             root(origin,destination);
                         } else{
                             root_line(origin,destination);
                         }
+
+<!--alert(document.getElementById("id_start_address").value);-->
+<!--alert("{{i.stationFrom.stationName}}");-->
+                        if("{{i.stationFrom.stationName}}" == "仮想点1"){
+                            var marker_start = CreateMarkerStart(origin);
+                        }else{
+                            var marker_ori = CreateMarker(origin);
+                        }
+
+
+                        if("{{i.stationTo.stationName}}" == "仮想点2"){
+                            var marker_end = CreateMarkerEnd(destination);
+                        }else{
+                            var marker_des = CreateMarker(destination);
+                        }
+
+                        <!--var marker_ori = CreateMarker(origin);-->
+
 
 
                         <!--//中心座標を取得するため、緯度経度の最小値と最大値を取得する-->
@@ -763,29 +801,64 @@
                                  }
                              });
 
-                          <!--var icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + i + "|FF0000|000000";-->
-                          <!--&lt;!&ndash;if (i == 0) {&ndash;&gt;-->
-                            <!--&lt;!&ndash;//Icon as start position&ndash;&gt;-->
-                            <!--&lt;!&ndash;icon = "https://chart.googleapis.com/chart?chst=d_map_xpin_icon&chld=pin_star|car-dealer|00FFFF|FF0000";&ndash;&gt;-->
-                          <!--&lt;!&ndash;}&ndash;&gt;-->
-                          <!--var marker = new google.maps.Marker({-->
-                            <!--position: origin, -->
-                            <!--map: map,-->
-                            <!--icon: icon-->
-                          <!--});-->
-                          <!--attachInstructionText(marker, myRoute.steps[i].instructions);-->
-                          <!--markerArray.push(marker);-->
-                        <!--}-->
-                        <!--//Icon as end position-->
-                        <!--var marker = new google.maps.Marker({-->
-                          <!--position: myRoute.steps[i - 1].end_point, -->
-                          <!--map: map,-->
-                          <!--icon: "https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=flag|ADDE63"-->
-                        <!--});                             -->
                     }
 
+                    function CreateMarker(latlng)
+                    {
+                        var marker = new google.maps.Marker({
+                            position: latlng,
+                            map: map,
+                          label: {
+                            text: 'V',
+                            <!--color: 'purple'-->
+                          }
+                            <!--draggable: true-->
+                        });
+                        <!--google.maps.event.addListener(marker, "dragend", UpdateRoute);-->
+                        return marker;
+                    }
 
+                    function CreateMarkerStart(latlng)
+                    {
+                        <!--var icon = new google.maps.MarkerImage(-->
+                        <!--'http://maps.google.co.jp/mapfiles/ms/icons/markerA.png',-->
+                        <!--new google.maps.Size(34,34),-->
+                        <!--new google.maps.Point(0,0),-->
+                        <!--new google.maps.Point(37,34)-->
+                        <!--);-->
+                        <!--var flag = {-->
+                          <!--url: '/static/img/flag_blue.png',-->
+                          <!--&lt;!&ndash;labelOrigin: new google.maps.Point(1, 1)&ndash;&gt;-->
+                        <!--};-->
+                        var marker = new google.maps.Marker({
+                            <!--icon: icon,-->
+                            position: latlng,
+                            map: map,
+                          label: {
+                            text: 'S',
+                            color: 'white',
+                            <!--fontSize: '30'-->
+                          }
+                            <!--draggable: true-->
+                        });
+                        <!--google.maps.event.addListener(marker, "dragend", UpdateRoute);-->
+                        return marker;
+                    }
 
+                    function CreateMarkerEnd(latlng)
+                    {
+                        var marker = new google.maps.Marker({
+                            position: latlng,
+                            map: map,
+                          label: {
+                            text: 'E',
+                            color: 'white'
+                          }
+                            <!--draggable: true-->
+                        });
+                        <!--google.maps.event.addListener(marker, "dragend", UpdateRoute);-->
+                        return marker;
+                    }
 
                  }
 
