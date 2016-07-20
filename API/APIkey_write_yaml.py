@@ -26,7 +26,7 @@ data.update({
 
 # write data
 try:
-	with open(os.path.dirname(os.path.abspath(__file__))+u"\API_KEY.yaml","w") as f:
+	with open(os.path.dirname(os.path.abspath(__file__))+u"/API_KEY.yaml","w") as f:
 		f.write(yaml.dump(data))
 except:
 	print('write yaml error.')
