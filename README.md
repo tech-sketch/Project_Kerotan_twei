@@ -96,12 +96,12 @@ $ pip install -r requirements.txt
 Project_Kerotan/API/APIkey_write_yaml.py
 の中の"key"に、それぞれ記述してください。
 
-Google Maps JavaScript APIのライセンスキーは
-Project_Kerotan/project_kerotan/static/js/google_map_api.jsの
+Google Maps JavaScript APIのライセンスキーについては、  
+Project_Kerotan/project_kerotan/static/js/google_map_api.jsを新たに生成し（.gitignoreされています）、以下を記述してください。
 ```
 document.write("<script src='https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY'></script>");
 ```
-のYOUR_API_KEYに記述してください。
+YOUR_API_KEYの部分に、ブラウザキーを記述してください。
 
 記述後、APIkey_wirte_yaml.pyを実行することで、APIキーが記述されたAPI_KEY.yamlが生成されます。
 各APIが実行される際、このAPI_KEY.yamlがロードされます。
