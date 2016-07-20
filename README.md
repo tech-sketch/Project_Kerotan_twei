@@ -86,17 +86,22 @@ $ pip install -r requirements.txt
 ```
 
 ### 外部APIのライセンスキーの設定
-ケロたんでは、以下5つのAPIを利用します。
+ケロたんでは、以下4つのAPIを利用します。
 * [駅探ASP](http://go.ekitan.com/service/index.shtml#as1)
 * [Bing Search API](https://datamarket.azure.com/dataset/bing/search)
-* [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/?hl=ja)
-* [Google Maps Directions API](https://developers.google.com/maps/documentation/directions/?hl=ja)
 * [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro?hl=ja)
+* [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/?hl=ja)
 
-各APIのライセンスキーは
+上3つのAPIのライセンスキーは
 Project_Kerotan/API/APIkey_write_yaml.py
 の中の"key"に、それぞれ記述してください。
-なお、Google Maps JavaScript API、Google Maps Directions APIに関してはライセンスキーは不要です。
+
+Google Maps JavaScript APIのライセンスキーは
+```Project_Kerotan/project_kerotan/static/js/google_map_api.js
+document.write("<script src='https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY'></script>");
+```
+のYOUR_API_KEYに記述してください。
+
 記述後、APIkey_wirte_yaml.pyを実行することで、APIキーが記述されたAPI_KEY.yamlが生成されます。
 各APIが実行される際、このAPI_KEY.yamlがロードされます。
 
