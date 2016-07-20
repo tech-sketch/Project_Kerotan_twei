@@ -96,6 +96,8 @@ def display_google_map(request):
 				arriv_company=form.cleaned_data["arriv_address"]
 				FLAG_getOverviewNews=0
 
+			#---------------------------------------------------------------------------------
+			#---------------------------------------------------------------------------------
 			#geocode,会社概要、ニュースを取得する。
 			try:
 				#Get geocode by Google Maps API.
@@ -123,7 +125,8 @@ def display_google_map(request):
 					print("--------------------------------------------")
 					raise
 
-				#会社概要とニュースを取得
+				#---------------------------------------------------------------------------------
+				#会社概要を取得
 				if FLAG_getOverviewNews==1:
 					try:
 						#辞書からとってくるだけ。
@@ -139,50 +142,52 @@ def display_google_map(request):
 						print(traceback.print_exc())
 						print("--------------------------------------------")
 						raise
-
-					#ニュースを取得
-					try:
-						#bing search APIで、関連ニュースをとってくる
-						print("try bing.web_search : ",end="")
-						bing = Bing()
-						keys = ["Title", "Url", "Source", "Description", "Date"]
-						query = form.cleaned_data["arriv_address"]
-						news = bing.web_search(query, 5, keys)
-						print("finished.")
-						# print("news", json.dumps(news, indent=2) )
-					except (TypeError, ConnectionAbortedError, ConnectionResetError, MaxRetryError, requests.packages.urllib3.exceptions.MaxRetryError, AttributeError, TransportError, googlemaps.exceptions.TransportError, ConnectionError, requests.exceptions.ConnectionError, NewConnectionError):
-						#一分間に連続してリクエスト送ると、回数制限に引っかかってエラー。たぶん。その場合、空のニュースを返すことにする。
-						#raiseはしない。
-						print("--------------------------------------------")
-						print("BingSearchAPI回数制限に引っかかりました。時間を置きましょう。")
-						print(traceback.print_exc())
-						print("--------------------------------------------")
-						news=[]
-					except FileNotFoundError:
-						#検索結果のファイル出力時のエラー。
-						#raiseはしない。
-						print("--------------------------------------------")
-						print("BingSearchAPIの結果出力時のエラー。")
-						print(traceback.print_exc())
-						print("--------------------------------------------")
-						news=[]
-					except:
-						# 謎のエラー発生時。
-						print("--------------------------------------------")
-						print("謎Error in ニュース.")
-						print(traceback.print_exc())
-						print("--------------------------------------------")
-						# raise #Exception補足できないから、もうraiseしない。
 				elif FLAG_getOverviewNews==0:
-					#概要とニュースはとってこない
-					print("getting overview and news was passed.")
+					#概要はとってこない
+					print("getting overview was passed.")
 					overview=""
 					image_company_chart=""
 					image_company_building=""
-					news=[]
 				else:
 					#ありえない
 					raise
+
+				#---------------------------------------------------------------------------------
+				#ニュースを取得
+				try:
+					#bing search APIで、関連ニュースをとってくる
+					print("try bing.web_search : ",end="")
+					bing = Bing()
+					keys = ["Title", "Url", "Source", "Description", "Date"]
+					query = form.cleaned_data["arriv_address"]
+					news = bing.web_search(query, 5, keys)
+					print("finished.")
+					print("news", json.dumps(news, indent=2) )
+				except (TypeError, ConnectionAbortedError, ConnectionResetError, MaxRetryError, requests.packages.urllib3.exceptions.MaxRetryError, AttributeError, TransportError, googlemaps.exceptions.TransportError, ConnectionError, requests.exceptions.ConnectionError, NewConnectionError):
+					#一分間に連続してリクエスト送ると、回数制限に引っかかってエラー。たぶん。その場合、空のニュースを返すことにする。
+					#raiseはしない。
+					print("--------------------------------------------")
+					print("BingSearchAPI回数制限に引っかかりました。時間を置きましょう。")
+					print(traceback.print_exc())
+					print("--------------------------------------------")
+					news=[]
+				except FileNotFoundError:
+					#検索結果のファイル出力時のエラー。
+					#raiseはしない。
+					print("--------------------------------------------")
+					print("BingSearchAPIの結果出力時のエラー。")
+					print(traceback.print_exc())
+					print("--------------------------------------------")
+					news=[]
+				except:
+					# 謎のエラー発生時。
+					print("--------------------------------------------")
+					print("謎Error in ニュース.")
+					print(traceback.print_exc())
+					print("--------------------------------------------")
+					# raise #Exception補足できないから、もうraiseしない。
+					news=[]
+				
 
 			#raiseしたら、Top画面に戻す。
 			except:
@@ -190,6 +195,8 @@ def display_google_map(request):
 				return render_to_response('kerotan/test_Gmap.html', {'form':form}, RequestContext(request))
 
 
+			#---------------------------------------------------------------------------------
+			#---------------------------------------------------------------------------------
 			#Get route infomation by Ekitan API.
 			try:
 				print("try ekitan search : ",end="")
