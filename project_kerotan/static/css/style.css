@@ -100,18 +100,6 @@
                 margin:0px 0px 0px 0px;
                 padding:0px;
             }
-            <!--<div id="origin_ido"></div>-->
-            <!--<div id="origin_keido"></div>-->
-            <!--<div id="destination_ido"></div>-->
-            <!--<div id="destination_keido"></div>-->
-            <!--<div id="waypoint_ido"></div>-->
-            <!--<div id="waypoint_keido"></div>-->
-            <!--<div id="waypoint2_ido"></div>-->
-            <!--<div id="waypoint2_keido"></div>            -->
-
-            <!--td{-->
-                <!--color:green;-->
-            <!--}-->
             #function_table{
                 width:300px;
                 //height:300px;
@@ -232,7 +220,7 @@
                 width:20%;
                 margin:0 auto;
                 //margin:0 auto 0 auto;
-//                bottom:0%;
+                //bottom:0%;
             }
             .container{
                 width:100%;
