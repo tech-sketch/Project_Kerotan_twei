@@ -1,16 +1,15 @@
             .map-embed
             {
-                max-width: 70% ;
-                max-height:30%;
-                height: 0 ;
+                max-width: 800px;
+                max-height:800px;
                 margin: 0 0 0 0 ;
                 padding: 0 0 56.25% ;
 
-                overflow: auto ;
+                //overflow: auto ;
                 index:5000;
                 position: relative ;
-                top: 70px ;
-                left: 100px ;
+                top: 10px ;
+                left: 500px ;
             }
 
             .map-embed > div
@@ -83,6 +82,16 @@
                 background-color:#49a9d4;
                 border-radius:5px;
             }
+            #top_button{
+                width: auto;
+                text-align:center;
+                padding:0;
+                border:0;
+                background-color:black;
+                margin:0;
+                background:none;
+                overflow:visible;
+            }
             input.button{
                 background-image:url
             }
@@ -91,18 +100,6 @@
                 margin:0px 0px 0px 0px;
                 padding:0px;
             }
-            <!--<div id="origin_ido"></div>-->
-            <!--<div id="origin_keido"></div>-->
-            <!--<div id="destination_ido"></div>-->
-            <!--<div id="destination_keido"></div>-->
-            <!--<div id="waypoint_ido"></div>-->
-            <!--<div id="waypoint_keido"></div>-->
-            <!--<div id="waypoint2_ido"></div>-->
-            <!--<div id="waypoint2_keido"></div>            -->
-
-            <!--td{-->
-                <!--color:green;-->
-            <!--}-->
             #function_table{
                 width:300px;
                 //height:300px;
@@ -112,6 +109,8 @@
                 display:block;
                 position:absolute;
                 //top:40%;
+                top:50px;
+                left:200px;
                 text-align:center;
                 padding:0px 0 0px;
                 margin:0px 0px 0px 0px;
@@ -165,7 +164,7 @@
                 //-webkit-box-shadow: 10px 10px 0px #F00;
                 //box-shadow: 10px 10px 0px #F00;
                 //border:2px solid #F2F2F2;
-                 background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFA500), to(#FFD700));
+                 background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffff33), to(#ffff99));
             }
             #thread1{
                 position:relative;
@@ -197,8 +196,11 @@
             li{
                 font-size:20px;
                 text-align:center;
-                background-color:mediumspringgreen;
-                display:inline-block
+                //background-color:mediumspringgreen;
+                background-color:black;
+                display:inline-block;
+                border-radius:10px;
+                background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c0c0c0), to(#7b7b7b));
             }
             .modal-content{
                 width:150%;
@@ -206,10 +208,10 @@
 
             }
             #id_start_address{
-                width:300px;
+                width:90%;
             }
             #id_arriv_address{
-                width:300px;
+                width:90%;
             }
             span.arrow-success{
                 display:inline-block;
@@ -218,17 +220,18 @@
                 width:20%;
                 margin:0 auto;
                 //margin:0 auto 0 auto;
-//                bottom:0%;
+                //bottom:0%;
             }
             .container{
                 width:100%;
+                height:100%;
                 max-height:100%;
                 margin:0;
                 padding:0;
 
             }
 
-            #bar{
+            #bar1{
              background-color:black;
              color:white;
              text-aline:left;
@@ -242,3 +245,49 @@
             .tab-pane{
                 color:black;
             }
+            #bar2{
+             background-color:black;
+             color:white;
+             text-aline:left;
+             font-size:30px;
+             //height:100px;
+             //width:100%;
+             height:100%;
+             width:150px;
+             margin:0 auto;
+             position:fixed;
+             z-index:10000;
+            }
+            .tab-pane{
+                color:black;
+            }
+            blockquote {
+                margin: 0 0 0 0; padding: 0;
+            }
+            .one {
+                width: 275px;
+                background: #e3e3e3;
+                padding: 10px;
+                position: relative;
+            }
+            .one .arrow {
+                /* 吹き出しの部分 */
+                width: 0;
+                height: 0;
+                line-height: 0;
+                //border-top: 40px solid aliceblue;
+                //border-left: none;
+                //border-right: 30px solid #e3e3e3;
+                //border-bottom:none;
+                border-top: 300px solid #e3e3e3;
+                border-bottom: 0px solid #e3e3e3;
+                border-left: 20px solid rgba(0,0,0,0.0);
+                border-right: 40px solid rgba(0,0,0,0.0);
+                //border-width: 100px 50px 50px 30px;
+                position: relative;
+                bottom: 250px;
+                right: 100%;
+                transform: rotate(20deg);
+            }
+
+
