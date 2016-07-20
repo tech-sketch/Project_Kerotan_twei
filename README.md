@@ -97,7 +97,8 @@ Project_Kerotan/API/APIkey_write_yaml.py
 の中の"key"に、それぞれ記述してください。
 
 Google Maps JavaScript APIのライセンスキーは
-```Project_Kerotan/project_kerotan/static/js/google_map_api.js
+Project_Kerotan/project_kerotan/static/js/google_map_api.jsの
+```
 document.write("<script src='https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY'></script>");
 ```
 のYOUR_API_KEYに記述してください。
