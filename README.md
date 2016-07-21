@@ -86,19 +86,50 @@ $ pip install -r requirements.txt
 ```
 
 ### 外部APIのライセンスキーの設定
-ケロたんでは、以下5つのAPIを利用します。
+ケロたんでは、以下4つのAPIを利用します。
 * [駅探ASP](http://go.ekitan.com/service/index.shtml#as1)
 * [Bing Search API](https://datamarket.azure.com/dataset/bing/search)
-* [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/?hl=ja)
-* [Google Maps Directions API](https://developers.google.com/maps/documentation/directions/?hl=ja)
 * [Google Maps Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro?hl=ja)
+* [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/?hl=ja)
 
-各APIのライセンスキーは
+上3つのAPIのライセンスキーは
 Project_Kerotan/API/APIkey_write_yaml.py
 の中の"key"に、それぞれ記述してください。
-なお、Google Maps JavaScript API、Google Maps Directions APIに関してはライセンスキーは不要です。
+
+Google Maps JavaScript APIのライセンスキーについては、  
+Project_Kerotan/project_kerotan/static/js/google_map_api.jsを新たに生成し（.gitignoreされています）、以下を記述してください。
+```
+document.write("<script src='https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY'></script>");
+```
+YOUR_API_KEYの部分に、ブラウザキーを記述してください。
+
 記述後、APIkey_wirte_yaml.pyを実行することで、APIキーが記述されたAPI_KEY.yamlが生成されます。
 各APIが実行される際、このAPI_KEY.yamlがロードされます。
+
+### Google Maps JavaScript APIキーの生成と認証
+Google Maps JavaSctipt APIを使用する際には、万が一APIキーが外部に漏れても他ユーザが使えないようにするために、使用するAPIキーの認証をGoogle API console上で行う必要があります。
+（なお、Google API consoleを使用する際にはgoogleアカウントの取得が必要です）
+
+手順  
+
+1. googleアカウントにログインした状態でGoogle API consoleに入ります。（webで調べるとトップに出てきます）  
+
+1. 新規プロジェクトの作成を行います。(プロジェクト名は自由で大丈夫です)  
+
+1. 「Google Maps JavaScript API」を選択します。  
+
+1. 「有効にする」を選択します。  
+
+1. 有効になっていますが、認証情報を生成してくださいと表示されるので、「認証情報に進む」を選択します。  
+
+1. ウェブブラウザ上でAPIを呼び出すため、APIを呼び出す場所を「ウェブブラウザ(Javascript)」に指定し、「必要な認証情報」を選択します。  
+
+1. 「HTTPリファラーからのリクエストを受け入れる」という項目にAPIキーを使用するブラウザのURLを入力します。  
+	* ローカルで使用する場合は「http://127.0.0.1:8000」と「http://127.0.0.1:8000/*」を入力してください。  
+	* *はワイルドカードとして使用し、選択したURL以下すべてが対象となります。  
+	* このHTTPリファラーを設定しない場合、すべてのリクエストを受け付けるようになるため、必ず設定してください。  
+
+1. 「APIキーを生成」を選択して生成されたAPIキーを、先ほどの説明にあったgoogle_map_api.jsに記述してください。  
 
 ## 実行方法
 データベースの設定、サーバの起動方法について説明します。
