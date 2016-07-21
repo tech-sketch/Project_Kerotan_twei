@@ -8,6 +8,8 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.forms.formsets import formset_factory
 
+import json
+
 from kerotan.forms import AddressForm
 
 from .ekitan.ekitan_api import Ekitan
@@ -17,29 +19,29 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../API')
 from APIkey_load_yaml import load_API_KEY
 
 from pprint import pprint
-import json
+
 
 # from prettyprint import pp
 
 def display_google_map(request):
-	if request.method == 'POST':
-		form = AddressForm(request.POST)
-		company_address={
-			"TIS":"東京都新宿区 西新宿８丁目１７−１",
-			"幕張メッセ":"〒261-0023 千葉市美浜区中瀬2-1",
-			"新宿駅":"〒160-0023 東京都新宿区西新宿１丁目１−３",
-			"東京駅":"〒100-0005 東京都千代田区丸の内1 丁目 呑んき１丸の内北口店 9",
-			"大阪駅":"大阪府大阪市北区梅田３丁目１−１",
-			"立命館大学":"〒525-8577 滋賀県草津市野路東１丁目1-1",
-			}
-		company_overview={
-			"TIS":"TIS株式会社（ティーアイエス）は国内大手システムインテグレーター。傘下にインテック、アグレックス、クオリカ、AJSなどを擁するTISインテックグループの中核企業である。",
-			"幕張メッセ":"幕張メッセ（まくはりメッセ、Makuhari Messe）は、千葉県千葉市美浜区にある大型の会議・展示施設である。また、株式会社幕張メッセは、これを運営する企業である。",
-			"新宿駅":"新宿駅（しんじゅくえき）は、東京都新宿区・渋谷区にある、東日本旅客鉄道（JR東日本）・京王電鉄・小田急電鉄・東京地下鉄（東京メトロ）・東京都交通局（都営地下鉄）の駅である。",
-			"東京駅":"東京駅（とうきょうえき）は、東京都千代田区丸の内一丁目にある、東日本旅客鉄道（JR東日本）・東海旅客鉄道（JR東海）・東京地下鉄（東京メトロ）の駅である。",
-			"大阪駅":"大阪駅（おおさかえき）は、大阪府大阪市北区梅田三丁目にある、西日本旅客鉄道（JR西日本）の駅である。",
-			"立命館大学":"立命館大学（りつめいかんだいがく、英語: Ritsumeikan University）は、京都府京都市中京区西ノ京朱雀町1に本部を置く日本の私立大学である。1922年に設置された。大学の略称は立命、立命館、立命大。近畿圏では立大も使用される[1]。"
-			}
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        company_address = {
+            "TIS": "東京都新宿区 西新宿８丁目１７−１",
+            "幕張メッセ": "〒261-0023 千葉市美浜区中瀬2-1",
+            "新宿駅": "〒160-0023 東京都新宿区西新宿１丁目１−３",
+            "東京駅": "〒100-0005 東京都千代田区丸の内1 丁目 呑んき１丸の内北口店 9",
+            "大阪駅": "大阪府大阪市北区梅田３丁目１−１",
+            "立命館大学": "〒525-8577 滋賀県草津市野路東１丁目1-1",
+            }
+        company_overview = {
+            "TIS": "TIS株式会社（ティーアイエス）は国内大手システムインテグレーター。傘下にインテック、アグレックス、クオリカ、AJSなどを擁するTISインテックグループの中核企業である。",
+            "幕張メッセ": "幕張メッセ（まくはりメッセ、Makuhari Messe）は、千葉県千葉市美浜区にある大型の会議・展示施設である。また、株式会社幕張メッセは、これを運営する企業である。",
+            "新宿駅": "新宿駅（しんじゅくえき）は、東京都新宿区・渋谷区にある、東日本旅客鉄道（JR東日本）・京王電鉄・小田急電鉄・東京地下鉄（東京メトロ）・東京都交通局（都営地下鉄）の駅である。",
+            "東京駅": "東京駅（とうきょうえき）は、東京都千代田区丸の内一丁目にある、東日本旅客鉄道（JR東日本）・東海旅客鉄道（JR東海）・東京地下鉄（東京メトロ）の駅である。",
+            "大阪駅": "大阪駅（おおさかえき）は、大阪府大阪市北区梅田三丁目にある、西日本旅客鉄道（JR西日本）の駅である。",
+            "立命館大学": "立命館大学（りつめいかんだいがく、英語: Ritsumeikan University）は、京都府京都市中京区西ノ京朱雀町1に本部を置く日本の私立大学である。1922年に設置された。大学の略称は立命、立命館、立命大。近畿圏では立大も使用される[1]。"
+            }
 # 		company_overview={
 # 			"TIS":"TIS株式会社（初代）は、1971年（昭和46年）4月、三和銀行および三和グループを中心に大阪市東区（現在の大阪市中央区）に\
 # 株式会社東洋情報システム（資本金6億円）として設立された。現在の法人は、2016年（平成28年）7月にITホールディングス株式会社がTIS株式会社（初代）を\
@@ -74,166 +76,164 @@ def display_google_map(request):
 # これによって大阪駅を起点、終点とする夜行列車は全て消滅した。ただし、トワイライトエクスプレスは同年5月16日(土)に山陽方面のツアー列車として復活した。\
 # 貨物列車は北方貨物線および梅田貨物線（いずれも通称）を利用するため大阪駅を通過しない。"}
 
+        if form.is_valid():
+            print("form.is_valid() ok")
+            # 出発フォームの入力内容が、辞書に登録されているかどうか確認。
+            try:
+                # 登録されていれば、辞書から住所を取得し、出発住所とする
+                start_company = company_address[form.cleaned_data["start_address"]]
+            except:
+                # 入力内容が、辞書に登録されていなければ、入力内容を出発住所とする。
+                start_company = form.cleaned_data["start_address"]
+
+            # 到着フォームでも同様の処理。
+            try:
+                arriv_company = company_address[form.cleaned_data["arriv_address"]]
+                # 到着の方が辞書に含まれるなら、概要とニュースと取得する。ので、フラグを立てる。
+                FLAG_getOverviewNews = 1
+            except:
+                # 入力内容が、辞書に登録されていなかった。
+                arriv_company = form.cleaned_data["arriv_address"]
+                FLAG_getOverviewNews = 0
+
+            # ---------------------------------------------------------------------------------
+            # ---------------------------------------------------------------------------------
+            # geocode,会社概要、ニュースを取得する。
+            try:
+                # Get geocode by Google Maps API.
+                try:
+                    print("try get_geocode : ",end="")
+                    gmg = GoogleMapsGeocoder()
+                    geocode = {}
+                    geocode.update({"start": gmg.get_geocode(start_company)["location"]})
+                    geocode.update({"arriv": gmg.get_geocode(arriv_company)["location"]})
+                    print("finished.")
+                except Exception as e:
+                    # 入力された住所から、geocodeを特定できない。
+                    # 再入力させるために、入力画面に戻す。
+                    print("--------------------------------------------")
+                    print(type(e))
+                    print(e)
+                    print(traceback.print_exc())
+                    print("--------------------------------------------")
+                    raise
+                except:
+                    # 謎のエラー発生時
+                    print("--------------------------------------------")
+                    print("謎Error in GoogleMaps.")
+                    print(traceback.print_exc())
+                    print("--------------------------------------------")
+                    raise
+
+                # ---------------------------------------------------------------------------------
+                # 会社概要を取得
+                if FLAG_getOverviewNews == 1:
+                    try:
+                        # 辞書からとってくるだけ。
+                        print("try company_overview : ", end="")
+                        overview = company_overview[form.cleaned_data["arriv_address"]]
+                        image_company_chart = "/static/img/TIS_chart.png"
+                        image_company_building = "/static/img/TIS_building.png"
+                        print("finished.")
+                    except:
+                        # 謎のエラー発生時.
+                        print("--------------------------------------------")
+                        print("謎Error in 会社概要.")
+                        print(traceback.print_exc())
+                        print("--------------------------------------------")
+                        raise
+                elif FLAG_getOverviewNews == 0:
+                    # 概要はとってこない
+                    print("getting overview was passed.")
+                    overview = ""
+                    image_company_chart = ""
+                    image_company_building = ""
+                else:
+                    # ありえない
+                    raise
+
+                # ---------------------------------------------------------------------------------
+                # ニュースを取得
+                try:
+                    # bing search APIで、関連ニュースをとってくる
+                    print("try bing.web_search : ", end="")
+                    bing = Bing()
+                    keys = ["Title", "Url", "Source", "Description", "Date"]
+                    query = form.cleaned_data["arriv_address"]
+                    news = bing.web_search(query, 5, keys)
+                    print("finished.")
+                    print("news", json.dumps(news, indent=2))
+                except (TypeError, ConnectionAbortedError, ConnectionResetError, MaxRetryError, requests.packages.urllib3.exceptions.MaxRetryError, AttributeError, TransportError, googlemaps.exceptions.TransportError, ConnectionError, requests.exceptions.ConnectionError, NewConnectionError):
+                    # 一分間に連続してリクエスト送ると、回数制限に引っかかってエラー。たぶん。その場合、空のニュースを返すことにする。
+                    # raiseはしない。
+                    print("--------------------------------------------")
+                    print("BingSearchAPI回数制限に引っかかりました。時間を置きましょう。")
+                    print(traceback.print_exc())
+                    print("--------------------------------------------")
+                    news = []
+                except FileNotFoundError:
+                    # 検索結果のファイル出力時のエラー。
+                    # raiseはしない。
+                    print("--------------------------------------------")
+                    print("BingSearchAPIの結果出力時のエラー。")
+                    print(traceback.print_exc())
+                    print("--------------------------------------------")
+                    news = []
+                except:
+                    # 謎のエラー発生時。
+                    print("--------------------------------------------")
+                    print("謎Error in ニュース.")
+                    print(traceback.print_exc())
+                    print("--------------------------------------------")
+                    # raise #Exception補足できないから、もうraiseしない。
+                    news = []
 
 
-		if form.is_valid():
-			print("form.is_valid() ok")
-			#出発フォームの入力内容が、辞書に登録されているかどうか確認。
-			try:
-				#登録されていれば、辞書から住所を取得し、出発住所とする
-				start_company=company_address[form.cleaned_data["start_address"]]
-			except:
-				#入力内容が、辞書に登録されていなければ、入力内容を出発住所とする。
-				start_company=form.cleaned_data["start_address"]
-
-			#到着フォームでも同様の処理。
-			try:
-				arriv_company=company_address[form.cleaned_data["arriv_address"]]
-				#到着の方が辞書に含まれるなら、概要とニュースと取得する。ので、フラグを立てる。
-				FLAG_getOverviewNews=1
-			except:
-				#入力内容が、辞書に登録されていなかった。
-				arriv_company=form.cleaned_data["arriv_address"]
-				FLAG_getOverviewNews=0
-
-			#---------------------------------------------------------------------------------
-			#---------------------------------------------------------------------------------
-			#geocode,会社概要、ニュースを取得する。
-			try:
-				#Get geocode by Google Maps API.
-				try:
-					print("try get_geocode : ",end="")
-					gmg=GoogleMapsGeocoder()
-					geocode = {}
-					geocode.update({ "start" : gmg.get_geocode( start_company )["location"] })
-					geocode.update({ "arriv" : gmg.get_geocode( arriv_company )["location"] })
-					print("finished.")
-				except Exception as e:
-					#入力された住所から、geocodeを特定できない。
-					#再入力させるために、入力画面に戻す。
-					print("--------------------------------------------")
-					print( type(e) )
-					print( e )
-					print(traceback.print_exc())
-					print("--------------------------------------------")
-					raise
-				except:
-					#謎のエラー発生時
-					print("--------------------------------------------")
-					print("謎Error in GoogleMaps.")
-					print(traceback.print_exc())
-					print("--------------------------------------------")
-					raise
-
-				#---------------------------------------------------------------------------------
-				#会社概要を取得
-				if FLAG_getOverviewNews==1:
-					try:
-						#辞書からとってくるだけ。
-						print("try company_overview : ",end="")
-						overview = company_overview[ form.cleaned_data["arriv_address"] ]
-						image_company_chart="/static/img/TIS_chart.png"
-						image_company_building="/static/img/TIS_building.png"
-						print("finished.")
-					except:
-						#謎のエラー発生時.
-						print("--------------------------------------------")
-						print("謎Error in 会社概要.")
-						print(traceback.print_exc())
-						print("--------------------------------------------")
-						raise
-				elif FLAG_getOverviewNews==0:
-					#概要はとってこない
-					print("getting overview was passed.")
-					overview=""
-					image_company_chart=""
-					image_company_building=""
-				else:
-					#ありえない
-					raise
-
-				#---------------------------------------------------------------------------------
-				#ニュースを取得
-				try:
-					#bing search APIで、関連ニュースをとってくる
-					print("try bing.web_search : ",end="")
-					bing = Bing()
-					keys = ["Title", "Url", "Source", "Description", "Date"]
-					query = form.cleaned_data["arriv_address"]
-					news = bing.web_search(query, 5, keys)
-					print("finished.")
-					print("news", json.dumps(news, indent=2) )
-				except (TypeError, ConnectionAbortedError, ConnectionResetError, MaxRetryError, requests.packages.urllib3.exceptions.MaxRetryError, AttributeError, TransportError, googlemaps.exceptions.TransportError, ConnectionError, requests.exceptions.ConnectionError, NewConnectionError):
-					#一分間に連続してリクエスト送ると、回数制限に引っかかってエラー。たぶん。その場合、空のニュースを返すことにする。
-					#raiseはしない。
-					print("--------------------------------------------")
-					print("BingSearchAPI回数制限に引っかかりました。時間を置きましょう。")
-					print(traceback.print_exc())
-					print("--------------------------------------------")
-					news=[]
-				except FileNotFoundError:
-					#検索結果のファイル出力時のエラー。
-					#raiseはしない。
-					print("--------------------------------------------")
-					print("BingSearchAPIの結果出力時のエラー。")
-					print(traceback.print_exc())
-					print("--------------------------------------------")
-					news=[]
-				except:
-					# 謎のエラー発生時。
-					print("--------------------------------------------")
-					print("謎Error in ニュース.")
-					print(traceback.print_exc())
-					print("--------------------------------------------")
-					# raise #Exception補足できないから、もうraiseしない。
-					news=[]
-				
-
-			#raiseしたら、Top画面に戻す。
-			except:
-				print("raised.")
-				return render_to_response('kerotan/test_Gmap.html', {'form':form}, RequestContext(request))
+            # raiseしたら、Top画面に戻す。
+            except:
+                print("raised.")
+                return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
 
 
-			#---------------------------------------------------------------------------------
-			#---------------------------------------------------------------------------------
-			#Get route infomation by Ekitan API.
-			try:
-				print("try ekitan search : ",end="")
-				ekitan = Ekitan()
-				_, results_filtered = ekitan.norikae_search( s_ido=geocode["start"]["lat"], s_keido=geocode["start"]["lng"], t_ido=geocode["arriv"]["lat"], t_keido=geocode["arriv"]["lng"],  )
-				print("finished.")
-				# print("results_filtered",results_filtered)
-				return render_to_response('kerotan/test_Gmap.html', {
-							'form':form, 'route':results_filtered, \
-							'start_latitude':geocode["start"]["lat"], 'start_longitude':geocode["start"]["lng"],\
-							'arriv_latitude':geocode["arriv"]["lat"], 'arriv_longitude':geocode["arriv"]["lng"],\
-							'news':news, 'overview':overview, 'image_company_chart':image_company_chart, 'image_company_building':image_company_building\
-							}, RequestContext(request))
-	
-			except FileNotFoundError:
-				#APIキーが記述されたファイルの読み込みエラー
-				print("--------------------------------------------")
-				print("APIキーが記述されたファイルの読み込みエラー")
-				print(traceback.print_exc())
-				print("--------------------------------------------")
-				raise
-			except:
-				print("--------------------------------------------")
-				print(traceback.print_exc())
-				print("--------------------------------------------")
-				return render_to_response('kerotan/test_Gmap.html', {'form':form}, RequestContext(request))
-				
+            # ---------------------------------------------------------------------------------
+            # ---------------------------------------------------------------------------------
+            # Get route infomation by Ekitan API.
+            try:
+                print("try ekitan search : ", end="")
+                ekitan = Ekitan()
+                _, results_filtered = ekitan.norikae_search(s_ido=geocode["start"]["lat"], s_keido=geocode["start"]["lng"], t_ido=geocode["arriv"]["lat"], t_keido=geocode["arriv"]["lng"], )
+                print("finished.")
+                # print("results_filtered",results_filtered)
+                return render_to_response('kerotan/test_Gmap.html', {
+                            'form': form, 'route': results_filtered, \
+                            'start_latitude': geocode["start"]["lat"], 'start_longitude': geocode["start"]["lng"],\
+                            'arriv_latitude': geocode["arriv"]["lat"], 'arriv_longitude': geocode["arriv"]["lng"],\
+                            'news': news, 'overview': overview, 'image_company_chart': image_company_chart, 'image_company_building': image_company_building\
+                            }, RequestContext(request))
+
+            except FileNotFoundError:
+                # APIキーが記述されたファイルの読み込みエラー
+                print("--------------------------------------------")
+                print("APIキーが記述されたファイルの読み込みエラー")
+                print(traceback.print_exc())
+                print("--------------------------------------------")
+                raise
+            except:
+                print("--------------------------------------------")
+                print(traceback.print_exc())
+                print("--------------------------------------------")
+                return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
 
 
-		#form.is_valid()を満たさない場合
-		else:
-			return render_to_response('kerotan/test_Gmap.html', {'form':form}, RequestContext(request))
-			# return render_to_response('kerotan/test_Gmap.html', {'formset':formset}, RequestContext(request))
 
-	#request.methodがPOSTじゃない場合
-	else:
-		form = AddressForm()
-		return render_to_response('kerotan/test_Gmap.html', {'form':form}, RequestContext(request))
-		# return renderrender(RequestContext(request), 'kerotan/test_Gmap.html')
+        # form.is_valid()を満たさない場合
+        else:
+            return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
+            # return render_to_response('kerotan/test_Gmap.html', {'formset':formset}, RequestContext(request))
+
+    # request.methodがPOSTじゃない場合
+    else:
+        form = AddressForm()
+        return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
+        # return renderrender(RequestContext(request), 'kerotan/test_Gmap.html')
 
