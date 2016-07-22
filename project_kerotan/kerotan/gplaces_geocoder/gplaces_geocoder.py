@@ -25,7 +25,8 @@ class GooglePlacesGeocoder(object):
             # 正式名称での実行を推奨 / 正式名称であれば第一候補に目的地が現れる可能性が非常に高い
             # pprint.pprint(GMgeocoder.get_address("TIS株式会社 名古屋本社"))
             # return query_result.places[0].geo_location
-            location = {"lat":float(query_result.places[0].geo_location["lat"]), "lng":float(query_result.places[0].geo_location["lng"])}
+            query_result.places[0].get_details()
+            location = {"name":query_result.places[0].name, "formated_address":query_result.places[0].formatted_address, "location":{"lat":float(query_result.places[0].geo_location["lat"]), "lng":float(query_result.places[0].geo_location["lng"])}}
             return location
 
         except Exception:
@@ -36,4 +37,4 @@ class GooglePlacesGeocoder(object):
 
 if __name__ == '__main__':
     GPgeocoder = GooglePlacesGeocoder()
-    pprint.pprint(GPgeocoder.get_address("TIS株式会社"))
+    pprint.pprint(GPgeocoder.get_address("幕張メッセ"))
