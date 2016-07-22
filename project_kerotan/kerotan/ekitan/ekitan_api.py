@@ -14,6 +14,7 @@ from APIkey_load_yaml import load_API_KEY
 
 class Ekitan(object):
 
+<<<<<<< HEAD
     # コンストラクタ（初期化）
     def __init__(self):
         # APIアクセスキー
