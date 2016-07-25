@@ -289,5 +289,8 @@
                 right: 100%;
                 transform: rotate(20deg);
             }
+            .pac-container {
+                z-index:10001;
+               }
 
 
