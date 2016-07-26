@@ -85,7 +85,8 @@ class Bing(object):
             for key in keys:
                 # result[key] = item[key].encode("utf-8")
                 result[key] = item[key]
-                results.append(result)
+                
+            results.append(result)
 
         # 結果を返す
         return results
