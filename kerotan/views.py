@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-import os, sys
+import os
+import sys
 import traceback
+import json
+from pprint import pprint
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -8,20 +11,16 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.forms.formsets import formset_factory
 
-import json
-
 from kerotan.forms import AddressForm
 
 from .ekitan.ekitan_api import Ekitan
 from .gmaps_geocoder.gmaps_geocoder import GoogleMapsGeocoder
 from .bing_news.bing_api import Bing
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../API')
-from APIkey_load_yaml import load_API_KEY
 
-from pprint import pprint
+API_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), u'..', u'..', u'API')
+sys.path.append(API_DIR)
+from get_API_key import get_API_key
 
-
-# from prettyprint import pp
 
 def display_google_map(request):
     if request.method == 'POST':
@@ -33,7 +32,7 @@ def display_google_map(request):
             "東京駅": "〒100-0005 東京都千代田区丸の内1 丁目 呑んき１丸の内北口店 9",
             "大阪駅": "大阪府大阪市北区梅田３丁目１−１",
             "立命館大学": "〒525-8577 滋賀県草津市野路東１丁目1-1",
-            }
+        }
         company_overview = {
             "TIS": "TIS株式会社（ティーアイエス）は国内大手システムインテグレーター。傘下にインテック、アグレックス、クオリカ、AJSなどを擁するTISインテックグループの中核企業である。",
             "幕張メッセ": "幕張メッセ（まくはりメッセ、Makuhari Messe）は、千葉県千葉市美浜区にある大型の会議・展示施設である。また、株式会社幕張メッセは、これを運営する企業である。",
@@ -41,7 +40,7 @@ def display_google_map(request):
             "東京駅": "東京駅（とうきょうえき）は、東京都千代田区丸の内一丁目にある、東日本旅客鉄道（JR東日本）・東海旅客鉄道（JR東海）・東京地下鉄（東京メトロ）の駅である。",
             "大阪駅": "大阪駅（おおさかえき）は、大阪府大阪市北区梅田三丁目にある、西日本旅客鉄道（JR西日本）の駅である。",
             "立命館大学": "立命館大学（りつめいかんだいがく、英語: Ritsumeikan University）は、京都府京都市中京区西ノ京朱雀町1に本部を置く日本の私立大学である。1922年に設置された。大学の略称は立命、立命館、立命大。近畿圏では立大も使用される[1]。"
-            }
+        }
 # 		company_overview={
 # 			"TIS":"TIS株式会社（初代）は、1971年（昭和46年）4月、三和銀行および三和グループを中心に大阪市東区（現在の大阪市中央区）に\
 # 株式会社東洋情報システム（資本金6億円）として設立された。現在の法人は、2016年（平成28年）7月にITホールディングス株式会社がTIS株式会社（初代）を\
@@ -102,7 +101,7 @@ def display_google_map(request):
             try:
                 # Get geocode by Google Maps API.
                 try:
-                    print("try get_geocode : ",end="")
+                    print("try get_geocode : ", end="")
                     gmg = GoogleMapsGeocoder()
                     geocode = {}
                     geocode.update({"start": gmg.get_geocode(start_company)["location"]})
@@ -236,4 +235,3 @@ def display_google_map(request):
         form = AddressForm()
         return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
         # return renderrender(RequestContext(request), 'kerotan/test_Gmap.html')
-

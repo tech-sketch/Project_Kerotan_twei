@@ -8,8 +8,12 @@ import os
 import traceback
 
 from datetime import datetime
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../../API')
-from APIkey_load_yaml import load_API_KEY
+from django.conf import settings
+
+# sys.path.append(settings.API_DIR) # runs on "python manage.py runserver" ok, "python ekitan_api.py" error
+API_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), u'..', u'..', u'API')
+sys.path.append(API_DIR)
+from get_API_key import get_API_key
 
 
 class Ekitan(object):
@@ -18,10 +22,10 @@ class Ekitan(object):
     # コンストラクタ（初期化）
     def __init__(self):
         # APIアクセスキー
-        self.api_key = load_API_KEY("Ekitan API")
+        self.api_key = get_API_key("Ekitan API")
 
     # web検索
-    def norikae_search(self, s_ido=35.696031, s_keido=139.690522, t_ido=35.681298, t_keido=139.766246 ):
+    def norikae_search(self, s_ido=35.696031, s_keido=139.690522, t_ido=35.681298, t_keido=139.766246):
         # 基本になるURL
         url = 'http://go.ekitan.com/asp-servlet/TrialAPI?'
 
@@ -34,11 +38,10 @@ class Ekitan(object):
         FC = "Norikae"
         LKEY = self.api_key           # !API key
         DT = "-1"                       # !date,半角数字8ケタ or -1当日
-        # DW=-1                       # 曜日、0平日、1土曜、2日曜、-1当日
-        # !time
-        # TM="0000"                     # !time
+        # DW = -1                       # 曜日、0平日、1土曜、2日曜、-1当日
+        # TM = "0000"                     # !time
         now = datetime.now()
-        TM = now.strftime('%H')+now.strftime('%M')
+        TM = now.strftime('%H') + now.strftime('%M')
         RP = "0"                        # !優先指定,0時刻、1料金、2乗換回数
         PN = "3"                        # !出力候補数、3,5,10,20
         SR = "0"                        # !発着指定, TMで指定した時間に出発するのか、到着するのかだと思う
@@ -64,17 +67,17 @@ class Ekitan(object):
 
         # フォーマットはjsonで受け取る
         # request_url = url + urllib.parse.urlencode(params) + "&$format=json"
-        request_url = url + "V="+V + "&FC="+FC + "&LKEY="+LKEY \
-                            + "&DT="+DT + "&TM="+TM + "&SR="+SR + "&EP="+EP \
-                            + "&RP="+RP + "&PN="+PN + "&AN="+AN + "&NF="+NF \
-                            + "&CHAR="+CHAR \
-                            + "&SPEC="+SPEC \
-                            + "&OF="+OF \
-                            + "&AIR="+AIR \
-                            + "&SF="+SF + "&ST="+ST \
-                            + "&LATF="+LATF + "&LNGF="+LNGF \
-                            + "&LATT="+LATT + "&LNGT="+LNGT \
-                            + "&SRG="+SRG
+        request_url = url + "V=" + V + "&FC=" + FC + "&LKEY=" + LKEY \
+                            + "&DT=" + DT + "&TM=" + TM + "&SR=" + SR + "&EP=" + EP \
+                            + "&RP=" + RP + "&PN=" + PN + "&AN=" + AN + "&NF=" + NF \
+                            + "&CHAR=" + CHAR \
+                            + "&SPEC=" + SPEC \
+                            + "&OF=" + OF \
+                            + "&AIR=" + AIR \
+                            + "&SF=" + SF + "&ST=" + ST \
+                            + "&LATF=" + LATF + "&LNGF=" + LNGF \
+                            + "&LATT=" + LATT + "&LNGT=" + LNGT \
+                            + "&SRG=" + SRG
                             # + "&MVF=発地点から駅への移動速度" + "&MVT=駅から着地点への移動速度"\
 
         # print("request_url",request_url)
@@ -83,8 +86,6 @@ class Ekitan(object):
         # print(results)
         # 結果を返す
         return results
-
-
 
     # APIを叩く
     def _search(self, request_url):
@@ -133,7 +134,7 @@ class Ekitan(object):
         condition_time_min  = response["trainDoc"]["condition"]["time"]["min"]["~T"] 	#出発時刻（分）
         time = {"time": {"hour": condition_time_hour, "min": condition_time_min}} 			#出発時刻
 
-        #出発地点、到着地点、出発時刻を保存
+        # 出発地点、到着地点、出発時刻を保存
         condition.update(pointFrom)
         condition.update(pointTo)
         condition.update(time)
@@ -142,7 +143,7 @@ class Ekitan(object):
         #経路情報
         line = []
 
-        #複数の経路検索結果のうち、最適な経路結果(best_index)の経路情報を保存する。
+        # 複数の経路検索結果のうち、最適な経路結果(best_index)の経路情報を保存する。
         for lineInfo in response["trainDoc"]["routeList"]["route"][best_index]["lineList"]["line"]:
             stationFrom_stationName = lineInfo["stationFrom"]["stationName"]["~T"] 				# 出発駅名
             stationFrom_latitude    = lineInfo["stationFrom"]["coordinate"]["latitude"]["~T"] 	# 出発駅の緯度
@@ -230,4 +231,3 @@ if __name__ == '__main__':
         # sys.exit()
 
     print("finished.")
-

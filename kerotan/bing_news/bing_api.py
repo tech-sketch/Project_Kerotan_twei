@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import os
+import sys
 import urllib
 import requests
 import json
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../../API/')
-from APIkey_load_yaml import load_API_KEY
+
+API_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), u'..', u'..', u'API')
+sys.path.append(API_DIR)
+from get_API_key import get_API_key
 
 
 class Bing(object):
@@ -14,7 +16,7 @@ class Bing(object):
     # コンストラクタ（初期化）
     def __init__(self):
         # APIアクセスキー
-        self.api_key = load_API_KEY("Bing search API")
+        self.api_key = get_API_key("Bing search API")
 
     # web検索
     def web_search(self, query, k, keys=["Url"], skip=0):
@@ -105,9 +107,9 @@ if __name__ == '__main__':
     # クエリを設定
     q = "TIS"
     # インスタンス生成
-    bing = Bing(key)
+    bing = Bing()
     # キー（検索結果から取得する情報）を設定
-    keys=["Title", "Url", "Source", "Description", "Date"]
+    keys = ["Title", "Url", "Source", "Description", "Date"]
 
     #検索
     try:

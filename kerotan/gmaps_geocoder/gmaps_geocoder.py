@@ -5,15 +5,16 @@ import os
 import traceback
 import pprint
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../../API/')
-from APIkey_load_yaml import load_API_KEY
+API_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), u'..', u'..', u'API')
+sys.path.append(API_DIR)
+from get_API_key import get_API_key
 
 
 class GoogleMapsGeocoder(object):
     # コンストラクタ（初期化）
     def __init__(self):
         # APIアクセスキー
-        self.api_key = load_API_KEY("Google Maps Geocoding API")
+        self.api_key = get_API_key("Google Maps Geocoding API")
 
     def __result_filtering(self, geocode_result):
         # formatted_adress='Japan'なら、不正な住所入力などでアドレスが取れてない。
