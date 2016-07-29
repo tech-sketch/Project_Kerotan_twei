@@ -291,6 +291,10 @@
             }
             .pac-container {
                 z-index:10001;
-               }
+            }
+
+            .pac-icon{
+                display:none
+            }
 
 
