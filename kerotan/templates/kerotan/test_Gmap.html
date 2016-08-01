@@ -17,37 +17,8 @@
         </script>
         <link href="/static/css/style.css" rel="stylesheet" type="text/css">
         <script src="/static/js/google-places-autocomplete.js"></script>
-        <script>
-            //地図の初期設定
-            function timing_load(){
-                var canvas = document.getElementById( 'map-canvas' ) ;
-
-                // 中心の位置座標を指定する
-                <!--新宿グランドタワー-->
-                var latlng = new google.maps.LatLng(35.695803589598675 , 139.6903158724308 );
-
-                // 地図のオプションを設定する
-                var mapOptions = {
-                    zoom: 16 ,				// ズーム値
-                    center: latlng ,		// 中心座標 [latlng]
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-
-                // [canvas]に、[mapOptions]の内容の、地図のインスタンス([map])を作成する
-                var map = new google.maps.Map( canvas , mapOptions ) ;
-
-                // マーカーのインスタンスは配列で管理しよう
-                var markers = [] ;
-
-                // マーカーのインスタンスを作成する
-                markers[0] = new google.maps.Marker({
-                    map: map ,
-                    position: latlng ,
-                }) ;
-            }
-        </script>
     </head>
-    <body onload="timing_load()">
+    <body>
         {% csrf_token %}
         <div id="bar2">
             <form action="{% url 'kerotan:display_google_map' %}" method="get">
@@ -226,7 +197,7 @@
             // ボタンが押された時の処理
             <!--button.onclick = function() {-->
 
-            function timing_load(){
+
 
 
                 rendererOptions = {
@@ -238,11 +209,19 @@
                 var map;
 
 
-                var zoom = 7;
+                // 中心の位置座標を指定する
+                <!--新宿グランドタワー-->
+                var latlng = new google.maps.LatLng(35.695803589598675 , 139.6903158724308 );
+
+
+
+
+
                 var mapTypeId = google.maps.MapTypeId.ROADMAP
 
                 var opts = {
-                    zoom: zoom,
+                    zoom: 16 ,				// ズーム値
+                    center: latlng ,		// 中心座標 [latlng]
                     mapTypeId: mapTypeId
                 };
                 map = new google.maps.Map(document.getElementById('map-canvas'),opts);
@@ -250,6 +229,15 @@
 
                 google.maps.event.addListener(directionsDisplay, 'directions_changed', function(){
                 });
+                // マーカーのインスタンスは配列で管理しよう
+                var markers = [] ;
+
+                // マーカーのインスタンスを作成する
+                markers[0] = new google.maps.Marker({
+                    map: map ,
+                    position: latlng ,
+                }) ;
+
                 calcRoute();
 
 
@@ -263,6 +251,7 @@
                     var minLng = 999;
                     var maxLng = 0;
                     var num = 2;
+                    var bounds = null;
 
                      //それぞれのルートを表示
                      {% for i in route.route.lineList %}
@@ -313,9 +302,11 @@
 
 
                     //マーカーが全て収まるように地図の中心とズームを調整して表示
-                     setTimeout(function(){
-                            map.fitBounds(bounds);
-                     },700);
+                    if(bounds != null){
+                         setTimeout(function(){
+                                map.fitBounds(bounds);
+                         },700);
+                     }
 
                     //電車による移動時のルート表示(ただし、直線)
                     function root_line(origin,destination){
@@ -408,7 +399,6 @@
 
                 }
 
-            }
         </script>
     </body>
 </html>
