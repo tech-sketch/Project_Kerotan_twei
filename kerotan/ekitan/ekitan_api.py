@@ -18,7 +18,6 @@ from get_API_key import get_API_key
 
 class Ekitan(object):
 
-<<<<<<< HEAD
     # コンストラクタ（初期化）
     def __init__(self):
         # APIアクセスキー
