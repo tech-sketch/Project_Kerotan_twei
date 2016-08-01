@@ -34,6 +34,8 @@
                 <div class="form-group">
                     <span style=" font-size:24px;"><label for="id_q">出発地</label></span>
                     <span>{{ form.start_address }}</span>
+                    <span hidden>{{ form.start_address2 }}</span>
+                    <span hidden>{{ form.start_location }}</span>
                     <script>
                         if(document.getElementById("id_start_address").value == false){
                             document.getElementById("id_start_address").value = "TIS";
@@ -44,6 +46,8 @@
                 <div class="form-group">
                     <span style="font-size:24px;"><label for="id_q">目的地</label></span>
                     <span>{{ form.arriv_address }}</span>
+                    <span hidden>{{ form.arriv_address2 }}</span>
+                    <span hidden>{{ form.arriv_location }}</span>
                     <script>
                             $('#id_arriv_address').addClass('form-control');
                     </script>
@@ -54,15 +58,15 @@
                     </button>
                     <ul  class="nav nav-stacked">
                         <li class="col-ld-3"><a href="#tab1" data-toggle="tab" style="color:black;">経路</a></li>
-                        <div style="position:relative; left:100px;">
+                        <div class="menu_block">
                             <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
                         </div>
                         <li class="col-ld-4"><a href="#tab2" data-toggle="tab" style="color:black;">会社概要</a></li>
-                        <div style="position:relative; left:100px;">
+                        <div class="menu_block">
                             <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
                         </div>
                         <li class="col-ld-5"><a href="#tab3" data-toggle="tab" style="color:black;">ニュース</a></li>
-                        <div style="position:relative; left:100px;">
+                        <div class="menu_block">
                             <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
                         </div>
                     </ul>
@@ -188,55 +192,13 @@
         <div class="map-embed">
 	        <div id="map-canvas" style="width:800px; height:600px"></div>
         </div>
+        <!--<script src="/static/js/display_route.js" id="display_route" data-route="{{route.route.lineList}}"></script>-->
+        <script src="/static/js/init_google_map.js"></script>
+        <script src="/static/js/google_map_marker.js"></script>
+        <script src="/static/js/route_method.js"></script>
 
         <script>
 
-            // ボタンに指定したid要素を取得
-            var button = document.getElementById('button');
-
-            // ボタンが押された時の処理
-            <!--button.onclick = function() {-->
-
-
-
-
-                rendererOptions = {
-                    draggable: true,
-                    preserveViewport:false
-                };
-                var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-                var directionsService = new google.maps.DirectionsService();
-                var map;
-
-
-                // 中心の位置座標を指定する
-                <!--新宿グランドタワー-->
-                var latlng = new google.maps.LatLng(35.695803589598675 , 139.6903158724308 );
-
-
-
-
-
-                var mapTypeId = google.maps.MapTypeId.ROADMAP
-
-                var opts = {
-                    zoom: 16 ,				// ズーム値
-                    center: latlng ,		// 中心座標 [latlng]
-                    mapTypeId: mapTypeId
-                };
-                map = new google.maps.Map(document.getElementById('map-canvas'),opts);
-                directionsDisplay.setMap(map);
-
-                google.maps.event.addListener(directionsDisplay, 'directions_changed', function(){
-                });
-                // マーカーのインスタンスは配列で管理しよう
-                var markers = [] ;
-
-                // マーカーのインスタンスを作成する
-                markers[0] = new google.maps.Marker({
-                    map: map ,
-                    position: latlng ,
-                }) ;
 
                 calcRoute();
 
@@ -250,7 +212,6 @@
                     var maxLat = 0;
                     var minLng = 999;
                     var maxLng = 0;
-                    var num = 2;
                     var bounds = null;
 
                      //それぞれのルートを表示
@@ -308,98 +269,15 @@
                          },700);
                      }
 
-                    //電車による移動時のルート表示(ただし、直線)
-                    function root_line(origin,destination){
-                        latlngs = [
-                          origin,
-                         destination
-                        ];
-                        var Path = new google.maps.Polyline({
-                            path: latlngs,
-                            strokeOpacity: 1.0,
-                            strokeColor:'#00ff00',
-                        });
-                        Path.setMap(map);
-                    }
-
-
-
-                    //徒歩のときのルート表示
-                    function root(origin,destination){
-                        var request = {
-                            origin: origin,
-                            destination: destination,
-                            <!--travelMode: google.maps.DirectionsTravelMode.TRANSIT,-->
-                            travelMode: google.maps.DirectionsTravelMode.WALKING,
-                            unitSystem: google.maps.DirectionsUnitSystem.METRIC,
-                            <!--optimizeWaypoints: true,-->
-                            <!--avoidHighways: false,-->
-                            <!--avoidTolls: false,-->
-                            <!--waypoints :wayPoints-->
-                        };
-                        rendererOptions = {
-                            draggable: true,
-                            preserveViewport:false,
-                            suppressMarkers : true,
-                        };
-                        directionsService.route(request,function(response,status){
-                            if (status == google.maps.DirectionsStatus.OK){
-                                 var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-                                 directionsDisplay.setDirections(response);
-                                 directionsDisplay.setRouteIndex(0);
-                                 directionsDisplay.setMap(map);
-                            }
-                        });
-
-                    }
-
-                    function CreateMarker(latlng){
-                       var marker = new google.maps.Marker({
-                            position: latlng,
-                            map: map,
-                            label: {
-                                text: 'V',
-                                <!--color: 'purple'-->
-                            }
-                            <!--draggable: true-->
-                        });
-                        <!--google.maps.event.addListener(marker, 'dragend', UpdateRoute);-->
-                        return marker;
-                    }
-
-                    function CreateMarkerStart(latlng){
-                        var marker = new google.maps.Marker({
-                            <!--icon: icon,-->
-                            position: latlng,
-                            map: map,
-                            label: {
-                                text: 'S',
-                                color: 'white',
-                                <!--fontSize: '30'-->
-                            }
-                            <!--draggable: true-->
-                        });
-                        <!--google.maps.event.addListener(marker, 'dragend', UpdateRoute);-->
-                        return marker;
-                    }
-
-                    function CreateMarkerEnd(latlng){
-                        var marker = new google.maps.Marker({
-                            position: latlng,
-                            map: map,
-                            label: {
-                                text: 'E',
-                                color: 'white'
-                            }
-                            <!--draggable: true-->
-                        });
-                        <!--google.maps.event.addListener(marker, 'dragend', UpdateRoute);-->
-                        return marker;
-                    }
 
                 }
 
+
+
         </script>
+
+
+
     </body>
 </html>
 {% endblock content %}
