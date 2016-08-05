@@ -215,7 +215,7 @@ def display_google_map(request):
             # raiseしたら、Top画面に戻す。
             except:
                 print("raised.")
-                return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
+                return render_to_response('kerotan/main_page.html', {'form': form}, RequestContext(request))
 
 
             # ---------------------------------------------------------------------------------
@@ -227,7 +227,7 @@ def display_google_map(request):
                 _, results_filtered = ekitan.norikae_search(s_ido=geocode["start"]["lat"], s_keido=geocode["start"]["lng"], t_ido=geocode["arriv"]["lat"], t_keido=geocode["arriv"]["lng"], )
                 print("finished.")
                 # print("results_filtered",results_filtered)
-                return render_to_response('kerotan/test_Gmap.html', {
+                return render_to_response('kerotan/main_page.html', {
                             'form': form, 'route': results_filtered, \
                             'start_latitude': geocode["start"]["lat"], 'start_longitude': geocode["start"]["lng"],\
                             'arriv_latitude': geocode["arriv"]["lat"], 'arriv_longitude': geocode["arriv"]["lng"],\
@@ -245,8 +245,8 @@ def display_google_map(request):
                 print("--------------------------------------------")
                 print(traceback.print_exc())
                 print("--------------------------------------------")
-                return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
-            # return render_to_response('kerotan/test_Gmap.html', {
+                return render_to_response('kerotan/main_page.html', {'form': form}, RequestContext(request))
+            # return render_to_response('kerotan/main_page.html', {
             #             'form': form, 'route': results_filtered, \
             #             'start_latitude': geocode["start"]["lat"], 'start_longitude': geocode["start"]["lng"],\
             #             'arriv_latitude': geocode["arriv"]["lat"], 'arriv_longitude': geocode["arriv"]["lng"],\
@@ -256,11 +256,11 @@ def display_google_map(request):
 
         # form.is_valid()を満たさない場合
         else:
-            return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
-            # return render_to_response('kerotan/test_Gmap.html', {'formset':formset}, RequestContext(request))
+            return render_to_response('kerotan/main_page.html', {'form': form}, RequestContext(request))
+            # return render_to_response('kerotan/main_page.html', {'formset':formset}, RequestContext(request))
 
     # request.methodがPOSTじゃない場合
     else:
         form = AddressForm()
-        return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
-        # return renderrender(RequestContext(request), 'kerotan/test_Gmap.html')
+        return render_to_response('kerotan/main_page.html', {'form': form}, RequestContext(request))
+        # return renderrender(RequestContext(request), 'kerotan/main_page.html')
