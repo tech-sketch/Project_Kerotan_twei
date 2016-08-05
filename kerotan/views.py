@@ -16,6 +16,7 @@ from kerotan.forms import AddressForm
 from .ekitan.ekitan_api import Ekitan
 from .gmaps_geocoder.gmaps_geocoder import GoogleMapsGeocoder
 from .bing_news.bing_api import Bing
+from .wikipedia.wikipedia_api import get_overview
 
 API_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), u'..', u'..', u'API')
 sys.path.append(API_DIR)
@@ -128,16 +129,17 @@ def display_google_map(request):
                 # 会社概要を取得
                 if FLAG_getOverviewNews == 1:
                     try:
-                        # 辞書からとってくるだけ。
+                        # wikipedia APIから取得
                         print("try company_overview : ", end="")
-                        overview = company_overview[form.cleaned_data["arriv_address"]]
+                        # overview = company_overview[form.cleaned_data["arriv_address"]]
+                        overview = get_overview(form.cleaned_data["arriv_address"])
                         image_company_chart = "/static/img/TIS_chart.png"
                         image_company_building = "/static/img/TIS_building.png"
                         print("finished.")
                     except:
-                        # 謎のエラー発生時.
+                        # エラー発生時.
                         print("--------------------------------------------")
-                        print("謎Error in 会社概要.")
+                        print("Error in 会社概要.")
                         print(traceback.print_exc())
                         print("--------------------------------------------")
                         raise
