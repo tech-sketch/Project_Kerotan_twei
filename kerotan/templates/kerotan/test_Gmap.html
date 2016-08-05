@@ -81,7 +81,6 @@
                         <blockquote class="one" style="z-index:5;">
                             <p>
                                 {% for i in route.route.lineList %}
-                                <!--<div class="function_thread">-->
                                 <div class="box function_thread" style="z-index:10;">
                                     <span id="thread1">
                                         <div style="font-size: 20px;">
@@ -96,9 +95,6 @@
                                         <div>{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</div>
                                     </span>
                                     <span id="thread2">
-                                        <script>
-                                        var str = "{{i.lineName}}";
-                                        </script>
                                         <div class='arrow-success' data-angle='90'></div>
                                         <div>
                                             {{i.lineName}}
@@ -136,7 +132,6 @@
                     <div>
                         <blockquote class="one" style="z-index:5;">
                             <p>
-                                <!--<div class="function_thread">-->
                                 <div class="box function_thread" style="z-index:10;background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e3e3e3), to(#e3e3e3))">
                                     <div>
                                         <div>
@@ -165,8 +160,6 @@
                             <p>
                                 {% for j in news %}
                                 <div class="box function_thread" style="z-index:10;font-size:16px;">
-                                    <!--<tr>-->
-                                    <!--<td width="70">{{j.Source}}</td>-->
                                     <div width="30%;" style="float:left;color:#7f7f7f;font-size:12px;">
                                         <script>
                                             var value = "{{j.Date}}";
@@ -192,91 +185,69 @@
         <div class="map-embed">
 	        <div id="map-canvas" style="width:800px; height:600px"></div>
         </div>
-        <!--<script src="/static/js/display_route.js" id="display_route" data-route="{{route.route.lineList}}"></script>-->
         <script src="/static/js/init_google_map.js"></script>
         <script src="/static/js/google_map_marker.js"></script>
         <script src="/static/js/route_method.js"></script>
-
         <script>
 
+            //マップ表示のため最大緯度と経度を取得する
+            var minLat = 999;
+            var maxLat = 0;
+            var minLng = 999;
+            var maxLng = 0;
+            var bounds = null;
 
-                calcRoute();
+             //それぞれのルートをマップ上に表示
+             {% for i in route.route.lineList %}
+                var origin = new google.maps.LatLng({{i.stationFrom.latitude}},{{i.stationFrom.longitude}});
+                var destination = new google.maps.LatLng({{i.stationTo.latitude}},{{i.stationTo.longitude}});
 
-
-                //二点間の経路()
-                function calcRoute() {
-
-
-                    //マップ表示のため最大緯度と経度を取得する
-                    var minLat = 999;
-                    var maxLat = 0;
-                    var minLng = 999;
-                    var maxLng = 0;
-                    var bounds = null;
-
-                     //それぞれのルートを表示
-                     {% for i in route.route.lineList %}
-                        var origin = new google.maps.LatLng({{i.stationFrom.latitude}},{{i.stationFrom.longitude}});
-                        var destination = new google.maps.LatLng({{i.stationTo.latitude}},{{i.stationTo.longitude}});
-
-                        if('{{i.lineName}}' == '移動'){
-                            root(origin,destination);
-                        } else{
-                            root_line(origin,destination);
-                        }
-
-                        if('{{i.stationFrom.stationName}}' == '仮想点1'){
-                            var marker_start = CreateMarkerStart(origin);
-                        }else{
-                            var marker_ori = CreateMarker(origin);
-                        }
-
-
-                        if('{{i.stationTo.stationName}}' == '仮想点2'){
-                            var marker_end = CreateMarkerEnd(destination);
-                        }else{
-                            var marker_des = CreateMarker(destination);
-                        }
-
-                        <!--var marker_ori = CreateMarker(origin);-->
-
-
-
-                        <!--//中心座標を取得するため、緯度経度の最小値と最大値を取得する-->
-                        if({{i.stationFrom.latitude}} < minLat){ minLat = {{i.stationFrom.latitude}}; }
-                        if({{i.stationFrom.latitude}} > maxLat){ maxLat = {{i.stationFrom.latitude}}; }
-                        if({{i.stationFrom.longitude}} < minLng){ minLng = {{i.stationFrom.longitude}}; }
-                        if({{i.stationFrom.longitude}} > maxLng){ maxLng ={{i.stationFrom.longitude}}; }
-                        if({{i.stationTo.latitude}} < minLat){ minLat = {{i.stationTo.latitude}}; }
-                        if({{i.stationTo.latitude}} > maxLat){ maxLat = {{i.stationTo.latitude}}; }
-                        if({{i.stationTo.longitude}} < minLng){ minLng = {{i.stationTo.longitude}}; }
-                        if({{i.stationTo.longitude}} > maxLng){ maxLng ={{i.stationTo.longitude}}; }
-                        //北西端の座標を設定
-                        var sw = new google.maps.LatLng(maxLat,minLng);
-
-                        //東南端の座標を設定
-                        var ne = new google.maps.LatLng(minLat,maxLng);
-
-                        //範囲を設定
-                        var bounds = new google.maps.LatLngBounds(sw, ne);
-                     {% endfor %}
-
-
-                    //マーカーが全て収まるように地図の中心とズームを調整して表示
-                    if(bounds != null){
-                         setTimeout(function(){
-                                map.fitBounds(bounds);
-                         },700);
-                     }
-
-
+                if('{{i.lineName}}' == '移動'){
+                    root(origin,destination);
+                } else{
+                    root_line(origin,destination);
                 }
 
+                if('{{i.stationFrom.stationName}}' == '仮想点1'){
+                    var marker_start = CreateMarkerStart(origin);
+                }else{
+                    var marker_ori = CreateMarker(origin);
+                }
 
+                if('{{i.stationTo.stationName}}' == '仮想点2'){
+                    var marker_end = CreateMarkerEnd(destination);
+                }else{
+                    var marker_des = CreateMarker(destination);
+                }
+
+                <!--//中心座標を取得するため、緯度経度の最小値と最大値を取得する-->
+                if({{i.stationFrom.latitude}} < minLat){ minLat = {{i.stationFrom.latitude}}; }
+                if({{i.stationFrom.latitude}} > maxLat){ maxLat = {{i.stationFrom.latitude}}; }
+                if({{i.stationFrom.longitude}} < minLng){ minLng = {{i.stationFrom.longitude}}; }
+                if({{i.stationFrom.longitude}} > maxLng){ maxLng ={{i.stationFrom.longitude}}; }
+                if({{i.stationTo.latitude}} < minLat){ minLat = {{i.stationTo.latitude}}; }
+                if({{i.stationTo.latitude}} > maxLat){ maxLat = {{i.stationTo.latitude}}; }
+                if({{i.stationTo.longitude}} < minLng){ minLng = {{i.stationTo.longitude}}; }
+                if({{i.stationTo.longitude}} > maxLng){ maxLng ={{i.stationTo.longitude}}; }
+                //北西端の座標を設定
+                var sw = new google.maps.LatLng(maxLat,minLng);
+
+                //東南端の座標を設定
+                var ne = new google.maps.LatLng(minLat,maxLng);
+
+                //範囲を設定
+                var bounds = new google.maps.LatLngBounds(sw, ne);
+             {% endfor %}
+
+
+            //マーカーが全て収まるように地図の中心とズームを調整して表示
+            if(bounds != null){
+                 setTimeout(function(){
+                        map.fitBounds(bounds);
+                 },700);
+            }
 
         </script>
-
-
 
     </body>
 </html>
