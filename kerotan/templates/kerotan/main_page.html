@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+
+
+{% block title %}ケロたん{% endblock title %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/static/js/google_map_api.js"></script>
+        <link rel="stylesheet" href="/static/css/bootstrap-arrows.css" type="text/css" data-angle="stylesheet">
+        <script src="/static/js/bootstrap-arrows.min.js"></script>
+        <script>
+        $(function () {
+            $('.arrow, [class^=arrow-]').bootstrapArrows();
+        });
+        </script>
+        <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+        <script src="/static/js/google-places-autocomplete.js"></script>
+    </head>
+    <body>
+        {% csrf_token %}
+        <div id="bar2">
+            <form action="{% url 'kerotan:display_google_map' %}" method="get">
+                <button type="submit" id="top_button">
+                    <img src="/static/img/flog_shadow2.jpg" style="width:50px; height:50px;">
+                    <div>
+                      ケロたん
+                    </div>
+                </button>
+            </form>
+            <form action="{% url 'kerotan:display_google_map' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <span style=" font-size:24px;"><label for="id_q">出発地</label></span>
+                    <span>{{ form.start_address }}</span>
+                    <span hidden>{{ form.start_address2 }}</span>
+                    <span hidden>{{ form.start_location }}</span>
+                    <script>
+                        if(document.getElementById("id_start_address").value == false){
+                            document.getElementById("id_start_address").value = "TIS";
+                         }
+                        $('#id_start_address').addClass('form-control');
+                    </script>
+                </div>
+                <div class="form-group">
+                    <span style="font-size:24px;"><label for="id_q">目的地</label></span>
+                    <span>{{ form.arriv_address }}</span>
+                    <span hidden>{{ form.arriv_address2 }}</span>
+                    <span hidden>{{ form.arriv_location }}</span>
+                    <script>
+                            $('#id_arriv_address').addClass('form-control');
+                    </script>
+                </div>
+                <div>
+                    <button type="submit" id="button" class ="btn btn-success btn-lg">検索
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                    <ul  class="nav nav-stacked">
+                        <li class="col-ld-3"><a href="#tab1" data-toggle="tab" style="color:black;">経路</a></li>
+                        <div class="menu_block">
+                            <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
+                        </div>
+                        <li class="col-ld-4"><a href="#tab2" data-toggle="tab" style="color:black;">会社概要</a></li>
+                        <div class="menu_block">
+                            <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
+                        </div>
+                        <li class="col-ld-5"><a href="#tab3" data-toggle="tab" style="color:black;">ニュース</a></li>
+                        <div class="menu_block">
+                            <img src="/static/img/flog_shadow2_reversal.jpg" style="width:50px; height:50px;">
+                        </div>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div id="function_table">
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    {% if route.route.lineList %}
+                    <div>
+                        <blockquote class="one" style="z-index:5;">
+                            <p>
+                                {% for i in route.route.lineList %}
+                                <div class="box function_thread" style="z-index:10;">
+                                    <span id="thread1">
+                                        <div style="font-size: 20px;">
+                                            <script>
+                                                if("{{i.stationFrom.stationName}}" == "仮想点1"){
+                                                    document.write(document.getElementById("id_start_address").value);
+                                                }else{
+                                                    document.write("{{i.stationFrom.stationName}}");
+                                                }
+                                          </script>
+                                        </div>
+                                        <div>{{i.stationFrom.time.hour}}時{{i.stationFrom.time.min}}分</div>
+                                    </span>
+                                    <span id="thread2">
+                                        <div class='arrow-success' data-angle='90'></div>
+                                        <div>
+                                            {{i.lineName}}
+                                        </div>
+                                    </span>
+                                    <span id="thread3">
+                                        <div style="font-size: 20px;">
+                                            <script>
+                                                if("{{i.stationTo.stationName}}" == "仮想点2"){
+                                                    document.write(document.getElementById("id_arriv_address").value);
+                                                }else{
+                                                    document.write("{{i.stationTo.stationName}}");
+                                                }
+                                            </script>
+                                        </div>
+                                        <div >{{i.stationTo.time.hour}}時{{i.stationTo.time.min}}分</div>
+                                    </span>
+                                </div>
+                                {% endfor %}
+                                {%if route.route.lineList %}
+                                <div style="font-size:14px; color:black; width:100%; text-align:right;">
+                                    <div>総時間 : {{route.route.totalTime.hour}}時間{{route.route.totalTime.min}}分</div>
+                                    <div>料金 : {{route.route.fare}}円</div>
+                                </div>
+                                {% endif %}
+                            </p>
+                            <div class="arrow"  style="position:fixed;left:175px;index:1;" /> <!-- 吹き出し部分 -->
+                        </blockquote>
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="tab-pane" id="tab2">
+                    {% if route.route.lineList %}
+                    <div>
+                        <blockquote class="one" style="z-index:5;">
+                            <p>
+                                <div class="box function_thread" style="z-index:10;background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e3e3e3), to(#e3e3e3))">
+                                    <div>
+                                        <div>
+                                            <img src="{{image_company_chart}}" style="width:100%; height:100%;">
+                                        </div>
+                                        <div>
+                                            <img src="{{image_company_building}}" style="width:70%; height:70%;">
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div style="font-size:14px;text-align:left;">
+                                        {{overview}}
+                                    </div>
+                                </div>
+                            </p>
+                            <div class="arrow"  style="position:fixed;left:175px;index:1;" /> <!-- 吹き出し部分 -->
+                        </blockquote>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="tab-pane" id="tab3">
+                    {%if news %}
+                    <div>
+                        <blockquote class="one" style="z-index:5;">
+                            <p>
+                                {% for j in news %}
+                                <div class="box function_thread" style="z-index:10;font-size:16px;">
+                                    <div width="30%;" style="float:left;color:#7f7f7f;font-size:12px;">
+                                        <script>
+                                            var value = "{{j.Date}}";
+                                            var result = value.replace( /T/g , " " ) ;
+                                            result = result.replace( /Z/g , " " ) ;
+                                            document.write(result);
+                                        </script>
+                                    </div>
+                                    <br>
+                                    <div width="70%" title="{{j.Description}}" style="margin:5px 10px 10px 10px;">
+                                        <a href="{{j.Url}}" target="_blank" style="font-size:16px">{{j.Title}}</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </p>
+                            <span class="arrow" style="position:fixed;left:175px;index:1;" /> <!-- 吹き出し部分 -->
+                        </blockquote>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="map-embed">
+	        <div id="map-canvas" style="width:800px; height:600px"></div>
+        </div>
+        <script src="/static/js/init_google_map.js"></script>
+        <script src="/static/js/google_map_marker.js"></script>
+        <script src="/static/js/route_method.js"></script>
+        <script>
+
+            //マップ表示のため最大緯度と経度を取得する
+            var minLat = 999;
+            var maxLat = 0;
+            var minLng = 999;
+            var maxLng = 0;
+            var bounds = null;
+
+             //それぞれのルートをマップ上に表示
+             {% for i in route.route.lineList %}
+                var origin = new google.maps.LatLng({{i.stationFrom.latitude}},{{i.stationFrom.longitude}});
+                var destination = new google.maps.LatLng({{i.stationTo.latitude}},{{i.stationTo.longitude}});
+
+                if('{{i.lineName}}' == '移動'){
+                    root(origin,destination);
+                } else{
+                    root_line(origin,destination);
+                }
+
+                if('{{i.stationFrom.stationName}}' == '仮想点1'){
+                    var marker_start = CreateMarkerStart(origin);
+                }else{
+                    var marker_ori = CreateMarker(origin);
+                }
+
+                if('{{i.stationTo.stationName}}' == '仮想点2'){
+                    var marker_end = CreateMarkerEnd(destination);
+                }else{
+                    var marker_des = CreateMarker(destination);
+                }
+
+
+                <!--//中心座標を取得するため、緯度経度の最小値と最大値を取得する-->
+                if({{i.stationFrom.latitude}} < minLat){ minLat = {{i.stationFrom.latitude}}; }
+                if({{i.stationFrom.latitude}} > maxLat){ maxLat = {{i.stationFrom.latitude}}; }
+                if({{i.stationFrom.longitude}} < minLng){ minLng = {{i.stationFrom.longitude}}; }
+                if({{i.stationFrom.longitude}} > maxLng){ maxLng ={{i.stationFrom.longitude}}; }
+                if({{i.stationTo.latitude}} < minLat){ minLat = {{i.stationTo.latitude}}; }
+                if({{i.stationTo.latitude}} > maxLat){ maxLat = {{i.stationTo.latitude}}; }
+                if({{i.stationTo.longitude}} < minLng){ minLng = {{i.stationTo.longitude}}; }
+                if({{i.stationTo.longitude}} > maxLng){ maxLng ={{i.stationTo.longitude}}; }
+                //北西端の座標を設定
+                var sw = new google.maps.LatLng(maxLat,minLng);
+
+                //東南端の座標を設定
+                var ne = new google.maps.LatLng(minLat,maxLng);
+
+                //範囲を設定
+                var bounds = new google.maps.LatLngBounds(sw, ne);
+             {% endfor %}
+
+
+            //マーカーが全て収まるように地図の中心とズームを調整して表示
+            if(bounds != null){
+                 setTimeout(function(){
+                        map.fitBounds(bounds);
+                 },700);
+            }
+
+        </script>
+
+    </body>
+</html>
+{% endblock content %}
+
+
