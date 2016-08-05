@@ -78,23 +78,23 @@ def display_google_map(request):
 
         if form.is_valid():
             print("form.is_valid() ok")
-            # 出発フォームの入力内容が、辞書に登録されているかどうか確認。
-            try:
-                # 登録されていれば、辞書から住所を取得し、出発住所とする
-                start_company = company_address[form.cleaned_data["start_address"]]
-            except:
-                # 入力内容が、辞書に登録されていなければ、入力内容を出発住所とする。
-                start_company = form.cleaned_data["start_address"]
+            # # 出発フォームの入力内容が、辞書に登録されているかどうか確認。
+            # try:
+            #     # 登録されていれば、辞書から住所を取得し、出発住所とする
+            #     start_company = company_address[form.cleaned_data["start_address"]]
+            # except:
+            #     # 入力内容が、辞書に登録されていなければ、入力内容を出発住所とする。
+            #     start_company = form.cleaned_data["start_address"]
 
-            # 到着フォームでも同様の処理。
-            try:
-                arriv_company = company_address[form.cleaned_data["arriv_address"]]
-                # 到着の方が辞書に含まれるなら、概要とニュースと取得する。ので、フラグを立てる。
-                FLAG_getOverviewNews = 1
-            except:
-                # 入力内容が、辞書に登録されていなかった。
-                arriv_company = form.cleaned_data["arriv_address"]
-                FLAG_getOverviewNews = 0
+            # # 到着フォームでも同様の処理。
+            # try:
+            #     arriv_company = company_address[form.cleaned_data["arriv_address"]]
+            #     # 到着の方が辞書に含まれるなら、概要とニュースと取得する。ので、フラグを立てる。
+            #     FLAG_getOverviewNews = 1
+            # except:
+            #     # 入力内容が、辞書に登録されていなかった。
+            #     arriv_company = form.cleaned_data["arriv_address"]
+            #     FLAG_getOverviewNews = 0
 
             # ---------------------------------------------------------------------------------
             # ---------------------------------------------------------------------------------
@@ -103,10 +103,35 @@ def display_google_map(request):
                 # Get geocode by Google Maps API.
                 try:
                     print("try get_geocode : ", end="")
-                    gmg = GoogleMapsGeocoder()
+                    # gmg = GoogleMapsGeocoder()
                     geocode = {}
-                    geocode.update({"start": gmg.get_geocode(start_company)["location"]})
-                    geocode.update({"arriv": gmg.get_geocode(arriv_company)["location"]})
+                    # geocode.update({"start": gmg.get_geocode(start_company)["location"]})
+                    # geocode.update({"arriv": gmg.get_geocode(arriv_company)["location"]})
+                    start_location_latitude = float(form.cleaned_data["start_location"][1:-1].split(", ")[0])
+                    start_location_latitude = round(start_location_latitude, 9)
+                    start_location_longitude = float(form.cleaned_data["start_location"][1:-1].split(", ")[1])
+                    start_location_longitude = round(start_location_longitude, 8)
+                    start_location = {"lat": start_location_latitude, "lng": start_location_longitude}
+                    print(form.cleaned_data["start_location"])
+                    # print(start_location_latitude)
+                    # print(start_location_longitude)
+                    print(start_location)
+                    arriv_location_latitude = float(form.cleaned_data["arriv_location"][1:-1].split(", ")[0])
+                    arriv_location_latitude = round(arriv_location_latitude, 9)
+                    arriv_location_longitude = float(form.cleaned_data["arriv_location"][1:-1].split(", ")[1])
+                    arriv_location_longitude = round(arriv_location_longitude, 8)
+                    arriv_location = {"lat": arriv_location_latitude, "lng": arriv_location_longitude}
+                    print(form.cleaned_data["arriv_location"])
+                    # print(arriv_location_latitude)
+                    # print(arriv_location_longitude)
+                    print(arriv_location)
+                    
+                    geocode.update({"start": start_location})
+                    geocode.update({"arriv": arriv_location})
+
+                    # geocode.update({"start": form.cleaned_data["start_location"]})
+                    # geocode.update({"arriv": form.cleaned_data["arriv_location"]})
+
                     print("finished.")
                 except Exception as e:
                     # 入力された住所から、geocodeを特定できない。
@@ -127,31 +152,28 @@ def display_google_map(request):
 
                 # ---------------------------------------------------------------------------------
                 # 会社概要を取得
-                if FLAG_getOverviewNews == 1:
-                    try:
-                        # wikipedia APIから取得
-                        print("try company_overview : ", end="")
-                        # overview = company_overview[form.cleaned_data["arriv_address"]]
-                        overview = get_overview(form.cleaned_data["arriv_address"])
-                        image_company_chart = "/static/img/TIS_chart.png"
-                        image_company_building = "/static/img/TIS_building.png"
-                        print("finished.")
-                    except:
-                        # エラー発生時.
-                        print("--------------------------------------------")
-                        print("Error in 会社概要.")
-                        print(traceback.print_exc())
-                        print("--------------------------------------------")
-                        raise
-                elif FLAG_getOverviewNews == 0:
-                    # 概要はとってこない
-                    print("getting overview was passed.")
-                    overview = ""
-                    image_company_chart = ""
-                    image_company_building = ""
-                else:
-                    # ありえない
+                # if FLAG_getOverviewNews == 1:
+                try:
+                    # wikipedia APIから取得
+                    print("try company_overview : ", end="")
+                    # overview = company_overview[form.cleaned_data["arriv_address"]]
+                    overview = get_overview(form.cleaned_data["arriv_address"])
+                    image_company_chart = "/static/img/TIS_chart.png"
+                    image_company_building = "/static/img/TIS_building.png"
+                    print("finished.")
+                except:
+                    # エラー発生時.
+                    print("--------------------------------------------")
+                    print("Error in 会社概要.")
+                    print(traceback.print_exc())
+                    print("--------------------------------------------")
                     raise
+                # elif FLAG_getOverviewNews == 0:
+                # 概要はとってこない
+                # print("getting overview was passed.")
+                # overview = ""
+                # image_company_chart = ""
+                # image_company_building = ""
 
                 # ---------------------------------------------------------------------------------
                 # ニュースを取得
@@ -218,13 +240,18 @@ def display_google_map(request):
                 print("APIキーが記述されたファイルの読み込みエラー")
                 print(traceback.print_exc())
                 print("--------------------------------------------")
-                raise
+                # raise
             except:
                 print("--------------------------------------------")
                 print(traceback.print_exc())
                 print("--------------------------------------------")
                 return render_to_response('kerotan/test_Gmap.html', {'form': form}, RequestContext(request))
-
+            # return render_to_response('kerotan/test_Gmap.html', {
+            #             'form': form, 'route': results_filtered, \
+            #             'start_latitude': geocode["start"]["lat"], 'start_longitude': geocode["start"]["lng"],\
+            #             'arriv_latitude': geocode["arriv"]["lat"], 'arriv_longitude': geocode["arriv"]["lng"],\
+            #             'news': news, 'overview': overview, 'image_company_chart': image_company_chart, 'image_company_building': image_company_building\
+            #             }, RequestContext(request))
 
 
         # form.is_valid()を満たさない場合
